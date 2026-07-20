@@ -1,0 +1,15 @@
+[default]
+DEBUG = 0
+TITLE = 'financas'
+EXTENSIONS = [
+    'app.blueprint.webui:init_app'
+]
+
+[development]
+DEBUG = 1
+
+[testing]
+DEBUG = 1
+
+[production]
+DEBUG = 0
