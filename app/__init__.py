@@ -3,7 +3,7 @@ import os
 import sys
 from pathlib import Path
 from .ext import configuration
-from .ext.database import db
+from .ext.database import db, init_app as init_database_app
 from .ext.database.models import Users
 
 
@@ -35,6 +35,8 @@ def create_app():
 
     app.config['SQLALCHEMY_DATABASE_URI'] = get_db_path(base_path)
     configuration.init_app(app, base_path)
+
+    init_database_app(app)
 
     with app.app_context():
         db.create_all()
