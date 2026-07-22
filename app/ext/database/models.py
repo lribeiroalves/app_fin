@@ -12,3 +12,9 @@ class Users(db.Model):
 
     def __repr__(self):
         return f'Usuario(id: {self.id}, nome: {self.nome})'
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'nome': self.nome
+        }
