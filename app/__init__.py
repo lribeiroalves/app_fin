@@ -3,6 +3,8 @@ import os
 import sys
 from pathlib import Path
 from .ext import configuration
+from .ext.database import db
+from .ext.database.models import Users
 
 
 def get_base_path():
@@ -15,7 +17,7 @@ def get_base_path():
 
 def get_db_path(base_path):
     if getattr(sys, 'frozen', False):
-        base_dir = Path(os.environ.get("LOCALAPPDATA", ".")) / "AppFinanceiro"
+        base_dir = Path(sys.executable).resolve().parent / 'data'
     else:
         base_dir = Path(base_path) / 'instance'
 
@@ -33,6 +35,15 @@ def create_app():
 
     app.config['SQLALCHEMY_DATABASE_URI'] = get_db_path(base_path)
     configuration.init_app(app, base_path)
+
+    with app.app_context():
+        db.create_all()
+        if not db.session.query(Users).first():
+            default_users = ['Sandra', 'Samantha', 'Mercedes']
+            for nome in default_users:
+                if not db.session.query(Users).filter_by(nome=nome).first():
+                    db.session.add(Users(nome=nome))
+            db.session.commit()
 
     @app.errorhandler(400)
     def bad_request(error):
