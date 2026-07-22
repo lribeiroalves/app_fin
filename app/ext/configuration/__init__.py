@@ -4,18 +4,33 @@ import sys
 from pathlib import Path
 
 
-def init_app(app, base_path):
+def _resolve_config_paths(base_path):
+    candidates = []
+
     base_dir = Path(base_path)
-    config_path = base_dir / 'config' / 'settings.toml'
-    secrets_path = base_dir / 'config' / 'secrets.toml'
+    candidates.append(base_dir / 'config')
 
-    if not config_path.exists() or not secrets_path.exists():
-        fallback_dir = Path(sys.executable).resolve().parent
-        config_path = fallback_dir / 'config' / 'settings.toml'
-        secrets_path = fallback_dir / 'config' / 'secrets.toml'
+    if getattr(sys, 'frozen', False):
+        exe_dir = Path(sys.executable).resolve().parent
+        candidates.append(exe_dir / 'config')
+        candidates.append(exe_dir)
+        candidates.append(base_dir)
 
-    if not config_path.exists() or not secrets_path.exists():
-        raise FileNotFoundError(f'Config files not found. Expected {config_path} and {secrets_path}')
+    for candidate in candidates:
+        config_path = candidate / 'settings.toml'
+        secrets_path = candidate / 'secrets.toml'
+        if config_path.exists() and secrets_path.exists():
+            return str(config_path), str(secrets_path)
+
+    return None, None
+
+
+def init_app(app, base_path):
+    config_path, secrets_path = _resolve_config_paths(base_path)
+
+    if not config_path or not secrets_path:
+        app.config.setdefault('ENV', 'production')
+        return
 
     app.config.setdefault('ENV', 'production')
-    FlaskDynaconf(app=app, settings_files=[str(config_path), str(secrets_path)], extensions_list='EXTENSIONS')
+    FlaskDynaconf(app=app, settings_files=[config_path, secrets_path], extensions_list='EXTENSIONS')
