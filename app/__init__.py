@@ -13,12 +13,14 @@ def get_base_path():
         return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-def get_db_path():
+def get_db_path(base_path):
     if getattr(sys, 'frozen', False):
-        base_dir = Path(os.environ.get("LOCALAPPDATA", ".") / "AppFinanceiro")
-        base_dir.mkdir(parents=True, exist_ok=True)
-        return f"sqlite:///{base_dir / 'database.db'}"
-    return "sqlite:///database.db"
+        base_dir = Path(os.environ.get("LOCALAPPDATA", ".")) / "AppFinanceiro"
+    else:
+        base_dir = Path(base_path) / 'instance'
+
+    base_dir.mkdir(parents=True, exist_ok=True)
+    return f"sqlite:///{base_dir / 'database.db'}"
 
 
 def create_app():
@@ -29,7 +31,7 @@ def create_app():
 
     app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = get_db_path()
+    app.config['SQLALCHEMY_DATABASE_URI'] = get_db_path(base_path)
     configuration.init_app(app, base_path)
 
     @app.errorhandler(400)
