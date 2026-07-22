@@ -25,6 +25,16 @@ def get_db_path(base_path):
     return f"sqlite:///{base_dir / 'database.db'}"
 
 
+def populate_db(app:Flask):
+    with app.app_context():
+        if not db.session.query(Users).first():
+            default_users = ['Sandra', 'Samantha', 'Mercedes']
+            for nome in default_users:
+                if not db.session.query(Users).filter_by(nome=nome).first():
+                    db.session.add(Users(nome=nome))
+            db.session.commit()
+
+
 def create_app():
     base_path = get_base_path()
 
@@ -33,17 +43,14 @@ def create_app():
 
     app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
 
+    # Salva o diretorio base e o caminho absoluto do armazenamento do banco de dados nas configs do app
+    app.config['APP_BASE_PATH'] = base_path
     app.config['SQLALCHEMY_DATABASE_URI'] = get_db_path(base_path)
-    configuration.init_app(app, base_path)
 
-    with app.app_context():
-        db.create_all()
-        if not db.session.query(Users).first():
-            default_users = ['Sandra', 'Samantha', 'Mercedes']
-            for nome in default_users:
-                if not db.session.query(Users).filter_by(nome=nome).first():
-                    db.session.add(Users(nome=nome))
-            db.session.commit()
+    configuration.init_app(app)
+
+    # Popula a base de dados com os dados default
+    populate_db(app)
 
     @app.errorhandler(400)
     def bad_request(error):
@@ -53,7 +60,5 @@ def create_app():
         })
         response.status_code = 400
         return response
-    
-    get_base_path()
     
     return app
