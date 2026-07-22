@@ -10,9 +10,6 @@ db = SQLAlchemy(model_class=Base)
 
 
 def init_app(app: Flask):
-    if 'sqlalchemy' in app.extensions:
-        return
-
     db.init_app(app)
     app.teardown_appcontext(lambda exc: db.session.close())
     
