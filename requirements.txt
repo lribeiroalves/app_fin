@@ -8,6 +8,8 @@ alembic==1.18.5
     # via flask-migrate
 blinker==1.9.0
     # via flask
+bottle==0.13.4
+    # via pywebview
 click==8.4.2
     # via flask
 dynaconf==3.3.2
@@ -37,7 +39,11 @@ markupsafe==3.0.3
     #   jinja2
     #   mako
     #   werkzeug
+proxy-tools==0.1.0
+    # via pywebview
 python-dotenv==1.2.2
+    # via -r requirements.in
+pywebview==6.2.1
     # via -r requirements.in
 sqlalchemy==2.0.51
     # via
@@ -46,6 +52,7 @@ sqlalchemy==2.0.51
 typing-extensions==4.16.0
     # via
     #   alembic
+    #   pywebview
     #   sqlalchemy
 werkzeug==3.1.8
     # via flask

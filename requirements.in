@@ -3,3 +3,4 @@ dynaconf
 flask-sqlalchemy
 flask-migrate
 python-dotenv
+pywebview
