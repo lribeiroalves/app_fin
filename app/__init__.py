@@ -1,13 +1,25 @@
 from flask import Flask, jsonify
 import os
+import sys
 from .ext import configuration
 
 
+def get_base_path():
+    if getattr(sys, 'frozen', False):
+        # se o app estiver rodando pelo .exe ele criar o atributo frozen
+        return sys._MEIPASS
+    else:
+        return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
 def create_app():
-    template_dir = os.path.abspath('app/templates')
-    static_dir = os.path.abspath('app/static')
+    base_path = get_base_path()
+
+    template_dir = os.path.join(base_path, 'app', 'templates')
+    static_dir = os.path.join(base_path, 'app', 'static')
+
     app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
-    configuration.init_app(app)
+    configuration.init_app(app, base_path)
 
     @app.errorhandler(400)
     def bad_request(error):
@@ -17,5 +29,7 @@ def create_app():
         })
         response.status_code = 400
         return response
+    
+    get_base_path()
     
     return app
