@@ -1,4 +1,4 @@
-.PHONY: updatereq install run run-window build
+.PHONY: updatereq install run run-window build linux-janela
 
 updatereq:
 	pip-compile requirements.in
@@ -14,3 +14,6 @@ run-window:
 
 build:
 	pyinstaller --noconsole --onefile --windowed --add-data "app;app" --add-data "config;config" --collect-data webview --hidden-import webview --hidden-import flask_migrate --hidden-import flask_sqlalchemy --hidden-import dynaconf main.py
+
+linux-janela:
+	pip install PyQt6 PyQt6-WebEngine qtpy
