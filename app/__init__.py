@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 import os
 import sys
+from pathlib import Path
 from .ext import configuration
 
 
@@ -12,6 +13,14 @@ def get_base_path():
         return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+def get_db_path():
+    if getattr(sys, 'frozen', False):
+        base_dir = Path(os.environ.get("LOCALAPPDATA", ".") / "AppFinanceiro")
+        base_dir.mkdir(parents=True, exist_ok=True)
+        return f"sqlite:///{base_dir / 'database.db'}"
+    return "sqlite:///database.db"
+
+
 def create_app():
     base_path = get_base_path()
 
@@ -19,6 +28,8 @@ def create_app():
     static_dir = os.path.join(base_path, 'app', 'static')
 
     app = Flask(__name__, template_folder=template_dir, static_folder=static_dir)
+
+    app.config['SQLALCHEMY_DATABASE_URI'] = get_db_path()
     configuration.init_app(app, base_path)
 
     @app.errorhandler(400)
