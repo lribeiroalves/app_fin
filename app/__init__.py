@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 from .ext import configuration
 from .ext.database import db
-from .ext.database.models import Users
+from .ext.database.models import Users, Bancos
 
 
 def get_base_path():
@@ -33,6 +33,12 @@ def populate_db(app:Flask):
                 if not db.session.query(Users).filter_by(nome=nome).first():
                     db.session.add(Users(nome=nome))
             db.session.commit()
+        if not db.session.query(Bancos).first():
+            default_bancos = ['Nubank', 'Mercado Pago', 'Sofisa', 'Banco do Brasil']
+            for banco in default_bancos:
+                if not db.session.scalars(db.select(Bancos).where(Bancos.nome == banco)).first():
+                    db.session.add(Bancos(nome=banco))
+                db.session.commit()
 
 
 def create_app():
