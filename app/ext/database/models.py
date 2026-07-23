@@ -18,3 +18,17 @@ class Users(db.Model):
             'id': self.id,
             'nome': self.nome
         }
+
+
+class Bancos(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    nome: Mapped[str] = mapped_column(String(255), nullable=False)
+
+    def __repr__(self):
+        return f'Banco(id: {self.id}, nome: {self.nome})'
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'nome': self.nome
+        }
