@@ -1,5 +1,5 @@
 from flask import Blueprint
-from .views import index, users
+from .views import index, users, bancos
 from app import get_base_path
 import os
 
@@ -11,6 +11,7 @@ bp = Blueprint('webui', __name__, static_folder=os.path.join(base_path, 'app', '
 # URLs
 bp.add_url_rule('/', view_func=index)
 bp.add_url_rule('/users', view_func=users)
+bp.add_url_rule('/bancos', view_func=bancos)
 
 
 def init_app(app):
