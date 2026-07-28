@@ -2,6 +2,7 @@ from flask import Blueprint
 from .views import index, users, bancos
 from app import get_base_path
 import os
+from datetime import datetime
 
 base_path = get_base_path()
 
@@ -16,3 +17,4 @@ bp.add_url_rule('/bancos', view_func=bancos)
 
 def init_app(app):
     app.register_blueprint(bp)
+    app.jinja_env.globals['datetime'] = datetime
