@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 import os
 import sys
 from pathlib import Path
+from dotenv import load_dotenv
 from .ext import configuration
 from .ext.database import db
 from .ext.database.models import Users, Bancos
@@ -23,6 +24,20 @@ def get_db_path(base_path):
 
     base_dir.mkdir(parents=True, exist_ok=True)
     return f"sqlite:///{base_dir / 'database.db'}"
+
+
+def load_environment(base_path):
+    candidates = [
+        Path(base_path) / '.env',
+        Path(base_path).parent / '.env',
+        Path(__file__).resolve().parent.parent / '.env',
+    ]
+
+    for env_path in candidates:
+        if env_path.exists():
+            load_dotenv(dotenv_path=env_path, override=False)
+            break
+
 
 
 def populate_db(app:Flask):
