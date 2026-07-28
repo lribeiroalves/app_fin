@@ -27,8 +27,28 @@
                 </div>
             </nav>
         </header>
-        {% block main %}
-        {% endblock %}
+        <main class="d-flex flex-column justify-content-start align-items-center p-3 mt-2">
+            <div id="main" class="d-flex flex-column p-5 w-75 rounded shadow"">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <div class="row alert p-0 text-center">
+                            <ul class="list-group">
+                                {% for message in messages %}
+                                <li class="list-group-item list-group-item-warning mt-1 mx-5">
+                                    {{ message }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                <div class="scroll-content">
+                    {% block main %}
+                    {% endblock %}
+                </div>
+            </div>
+        </main>
 
         {% block js %}
         {% endblock %}
