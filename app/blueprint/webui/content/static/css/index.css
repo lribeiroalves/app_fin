@@ -1,0 +1,8 @@
+li button {
+    color: black !important;
+}
+
+li:active * {
+    color: darkgoldenrod !important;
+    font-weight: bold;
+}
