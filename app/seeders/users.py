@@ -23,4 +23,4 @@ def seed_users():
             n_add += 1
     
     db.session.commit()
-    click.echo(f'{add} Usuarios adicionados. {n_add} Usuarios ja existiam')
+    print(f'{add} Usuarios adicionados. {n_add} Usuarios ja existiam')
