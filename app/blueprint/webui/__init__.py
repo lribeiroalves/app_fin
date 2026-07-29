@@ -1,5 +1,5 @@
 from flask import Blueprint
-from .views import index, users, bancos
+from .views import index, users, bancos, form_index
 from app import get_base_path
 import os
 from datetime import datetime
@@ -13,6 +13,7 @@ bp = Blueprint('webui', __name__, static_folder=os.path.join(base_path, 'app', '
 bp.add_url_rule('/', view_func=index)
 bp.add_url_rule('/users', view_func=users)
 bp.add_url_rule('/bancos', view_func=bancos)
+bp.add_url_rule('/form-index', view_func=form_index, methods=['POST'])
 
 
 def init_app(app):
