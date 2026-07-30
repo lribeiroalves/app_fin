@@ -33,109 +33,119 @@
     </form>
 </div>
 
-<ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="entradas-tab" data-bs-toggle="tab" data-bs-target="#entradas" type="button" role="tab" aria-controls="entradas" aria-selected="true" onclick="activeEntrada()">Entradas</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="saidas-tab" data-bs-toggle="tab" data-bs-target="#saidas" type="button" role="tab" aria-controls="saidas" aria-selected="false" onclick="activeSaida()">Saidas</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="saldos-tab" data-bs-toggle="tab" data-bs-target="#saldos" type="button" role="tab" aria-controls="saldos" aria-selected="false" onclick="activeSaldo()">Saldos</button>
-  </li>
-</ul>
-<div class="tab-content">
-    <div class="tab-pane fade show active p-4 " id="entradas" role="tabpanel" aria-labelledby="entradas-tab">
-        <div class="d-flex align-items-center flex-column">
-            {% if entradas %}
-                <table class="table table-striped table-hover table-bordered border-warning table-responsive w-75" id="table-entradas">
-                    <thead>
-                        <tr>
-                            <th class="w-50" scope="col">Descrição</th>
-                            <th class="w-50" scope="col">Valor</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for linha in entradas %}
+{% if form_validated %}
+    <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="entradas-tab" data-bs-toggle="tab" data-bs-target="#entradas" type="button" role="tab" aria-controls="entradas" aria-selected="true">Entradas</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="saidas-tab" data-bs-toggle="tab" data-bs-target="#saidas" type="button" role="tab" aria-controls="saidas" aria-selected="false">Saidas</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="saldos-tab" data-bs-toggle="tab" data-bs-target="#saldos" type="button" role="tab" aria-controls="saldos" aria-selected="false">Saldos</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="resultados-tab" data-bs-toggle="tab" data-bs-target="#resultados" type="button" role="tab" aria-controls="resultados" aria-selected="false">Resultados</button>
+    </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade show active p-4 " id="entradas" role="tabpanel" aria-labelledby="entradas-tab">
+            <div class="d-flex align-items-center flex-column">
+                {% if entradas %}
+                    <table class="table table-striped table-hover table-bordered border-warning table-responsive w-75" id="table-entradas">
+                        <thead>
                             <tr>
-                                <td class="w-50">{{ linha.descricao|capitalize }}</td>
-                                <td class="w-50">{{ linha.valor|format_real }}</td>
+                                <th class="w-50" scope="col">Descrição</th>
+                                <th class="w-50" scope="col">Valor</th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                <table class="table table-striped table-hover table-bordered border-warning table-responsive w-75" id="table-entradas">
-                    <tbody>
-                        <tr>
-                            <td class="w-50"><strong>Total</strong></td>
-                            <td class="w-50">{{ total_entradas|format_real }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            {% endif %}
+                        </thead>
+                        <tbody>
+                            {% for linha in entradas %}
+                                <tr>
+                                    <td class="w-50">{{ linha.descricao|capitalize }}</td>
+                                    <td class="w-50">{{ linha.valor|format_real }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <table class="table table-striped table-hover table-bordered border-warning table-responsive w-75" id="table-entradas">
+                        <tbody>
+                            <tr>
+                                <td class="w-50"><strong>Total</strong></td>
+                                <td class="w-50">{{ total_entradas|format_real }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+        <div class="tab-pane fade p-4" id="saidas" role="tabpanel" aria-labelledby="saidas-tab">
+            <div class="d-flex align-items-center flex-column">
+                {% if saidas %}
+                    <table class="table table-striped table-hover table-bordered border-warning table-responsive w-75" id="table-saidas">
+                        <thead>
+                            <tr>
+                                <th class="w-50" scope="col">Descrição</th>
+                                <th class="w-50" scope="col">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for linha in saidas %}
+                                <tr>
+                                    <td class="w-50">{{ linha.descricao|capitalize }}</td>
+                                    <td class="w-50">{{ linha.valor|format_real }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <table class="table table-striped table-hover table-bordered border-warning table-responsive w-75" id="table-entradas">
+                        <tbody>
+                            <tr>
+                                <td class="w-50"><strong>Total</strong></td>
+                                <td class="w-50">{{ total_saidas|format_real }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+        <div class="tab-pane fade p-4" id="saldos" role="tabpanel" aria-labelledby="saldos-tab">
+            <div class="d-flex align-items-center flex-column">
+                {% if saldos %}
+                    <table class="table table-striped table-hover table-bordered border-warning table-responsive w-75" id="table-saldos">
+                        <thead>
+                            <tr>
+                                <th class="w-50" scope="col">Banco</th>
+                                <th class="w-50" scope="col">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for linha in saldos %}
+                                <tr>
+                                    <td class="w-50">{{ linha.banco.nome|capitalize }}</td>
+                                    <td class="w-50">{{ linha.saldo|format_real }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <table class="table table-striped table-hover table-bordered border-warning table-responsive w-75" id="table-entradas">
+                        <tbody>
+                            <tr>
+                                <td class="w-50"><strong>Total</strong></td>
+                                <td class="w-50">{{ total_saldos|format_real }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+        <div class="tab-pane fade p-4" id="resultados" role="tabpanel" aria-labelledby="resultados-tab">
+            <div class="d-flex align-items-center flex-column">
+                <p>Colocar formulario com os dados compilados para exibição</p>
+            </div>
         </div>
     </div>
-    <div class="tab-pane fade p-4" id="saidas" role="tabpanel" aria-labelledby="saidas-tab">
-        <div class="d-flex align-items-center flex-column">
-            {% if saidas %}
-                <table class="table table-striped table-hover table-bordered border-warning table-responsive w-75" id="table-saidas">
-                    <thead>
-                        <tr>
-                            <th class="w-50" scope="col">Descrição</th>
-                            <th class="w-50" scope="col">Valor</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for linha in saidas %}
-                            <tr>
-                                <td class="w-50">{{ linha.descricao|capitalize }}</td>
-                                <td class="w-50">{{ linha.valor|format_real }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                <table class="table table-striped table-hover table-bordered border-warning table-responsive w-75" id="table-entradas">
-                    <tbody>
-                        <tr>
-                            <td class="w-50"><strong>Total</strong></td>
-                            <td class="w-50">{{ total_saidas|format_real }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            {% endif %}
-        </div>
-    </div>
-    <div class="tab-pane fade p-4" id="saldos" role="tabpanel" aria-labelledby="saldos-tab">
-        <div class="d-flex align-items-center flex-column">
-            {% if saldos %}
-                <table class="table table-striped table-hover table-bordered border-warning table-responsive w-75" id="table-saldos">
-                    <thead>
-                        <tr>
-                            <th class="w-50" scope="col">Banco</th>
-                            <th class="w-50" scope="col">Valor</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for linha in saldos %}
-                            <tr>
-                                <td class="w-50">{{ linha.banco.nome|capitalize }}</td>
-                                <td class="w-50">{{ linha.saldo|format_real }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                <table class="table table-striped table-hover table-bordered border-warning table-responsive w-75" id="table-entradas">
-                    <tbody>
-                        <tr>
-                            <td class="w-50"><strong>Total</strong></td>
-                            <td class="w-50">{{ total_saldos|format_real }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            {% endif %}
-        </div>
-    </div>
-</div>
+{% endif %}
 {% endblock %}
 
 {% block js %}

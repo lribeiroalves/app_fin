@@ -28,7 +28,7 @@ def form_index():
         if saldos:
             total_saldos = sum(saldo.saldo for saldo in saldos)
 
-    return render_template('index.html', form=form, entradas=entradas, saidas=saidas, saldos=saldos, total_entradas=total_entradas, total_saidas=total_saidas, total_saldos=total_saldos)
+    return render_template('index.html', form=form, form_validated=True, entradas=entradas, saidas=saidas, saldos=saldos, total_entradas=total_entradas, total_saidas=total_saidas, total_saldos=total_saldos)
 
 
 def users():
