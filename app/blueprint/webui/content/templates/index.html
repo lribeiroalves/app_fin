@@ -140,13 +140,31 @@
             </div>
         </div>
         <div class="tab-pane fade p-4" id="resultados" role="tabpanel" aria-labelledby="resultados-tab">
-            <div class="d-flex align-items-center flex-column">
-                <p>Colocar formulario com os dados compilados para exibição</p>
+            <div class="d-flex flex-column">
+                <div class="d-flex flex-row w-100">
+                    <h3 class="text-center w-100">Resultados do Mês</h3>
+                </div>
+                <div class="d-flex flex-row w-100 mt-5 justify-content-between">
+                    <div class="d-flex flex-column w-50 align-items-center">
+                        <div class="card p-3 w-75">
+                            <canvas id="graf-resultado" data-labels='{{ labels_resultado|tojson }}' data-values='{{ values_resultado|tojson }}'></canvas>
+                        </div>
+                        <h4 class="text-center w-100 mt-5">Resultado: {{ (total_entradas - total_saidas)|format_real }}</h2>
+                    </div>
+                    <div class="d-flex flex-column w-50 align-items-center">
+                        <h3 class="text-center">teste</h3>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+{%  else %}
+    <h2 class="mt-5">Nada encontrado para esse período.</h1>
 {% endif %}
 {% endblock %}
 
 {% block js %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="{{url_for('webui.static', filename='js/graficos.js')}}"></script>
 {% endblock %}
