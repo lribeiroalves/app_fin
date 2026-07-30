@@ -17,7 +17,18 @@ def form_index():
         saidas = db.session.scalars(db.select(Transacoes).where(Transacoes.ano == int(form.ano.data), Transacoes.mes == int(form.mes.data), Transacoes.user_id == int(form.user.data), Transacoes.tipo == 'SAIDA')).all()
         saldos = db.session.scalars(db.select(Saldos).where(Saldos.ano == int(form.ano.data), Saldos.mes == int(form.mes.data), Saldos.user_id == int(form.user.data))).all()
 
-    return render_template('index.html', form=form, entradas=entradas, saidas=saidas, saldos=saldos)
+        total_entradas = 0
+        total_saidas = 0
+        total_saldos = 0    
+
+        if entradas:
+            total_entradas = sum(entrada.valor for entrada in entradas)
+        if saidas:
+            total_saidas = sum(saida.valor for saida in saidas)
+        if saldos:
+            total_saldos = sum(saldo.saldo for saldo in saldos)
+
+    return render_template('index.html', form=form, entradas=entradas, saidas=saidas, saldos=saldos, total_entradas=total_entradas, total_saidas=total_saidas, total_saldos=total_saldos)
 
 
 def users():

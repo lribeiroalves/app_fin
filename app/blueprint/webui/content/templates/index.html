@@ -62,6 +62,10 @@
                                 <td>{{ linha.valor }}</td>
                             </tr>
                         {% endfor %}
+                            <tr>
+                                <td>Total</td>
+                                <td>{{ total_entradas }}</td>
+                            </tr>
                     </tbody>
                 </table>
             {% endif %}
@@ -84,6 +88,10 @@
                                 <td>{{ linha.valor }}</td>
                             </tr>
                         {% endfor %}
+                            <tr>
+                                <td>Total</td>
+                                <td>{{ total_saidas }}</td>
+                            </tr>
                     </tbody>
                 </table>
             {% endif %}
@@ -106,6 +114,10 @@
                                 <td>{{ linha.saldo }}</td>
                             </tr>
                         {% endfor %}
+                            <tr>
+                                <td>Total</td>
+                                <td>{{ total_saldos }}</td>
+                            </tr>
                     </tbody>
                 </table>
             {% endif %}
