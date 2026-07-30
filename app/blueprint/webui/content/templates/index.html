@@ -51,21 +51,25 @@
                 <table class="table table-striped table-hover table-bordered border-warning table-responsive w-75" id="table-entradas">
                     <thead>
                         <tr>
-                            <th scope="col">Descrição</th>
-                            <th scope="col">Valor</th>
+                            <th class="w-50" scope="col">Descrição</th>
+                            <th class="w-50" scope="col">Valor</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for linha in entradas %}
                             <tr>
-                                <td>{{ linha.descricao|capitalize }}</td>
-                                <td>{{ linha.valor }}</td>
+                                <td class="w-50">{{ linha.descricao|capitalize }}</td>
+                                <td class="w-50">{{ linha.valor|format_real }}</td>
                             </tr>
                         {% endfor %}
-                            <tr>
-                                <td>Total</td>
-                                <td>{{ total_entradas }}</td>
-                            </tr>
+                    </tbody>
+                </table>
+                <table class="table table-striped table-hover table-bordered border-warning table-responsive w-75" id="table-entradas">
+                    <tbody>
+                        <tr>
+                            <td class="w-50"><strong>Total</strong></td>
+                            <td class="w-50">{{ total_entradas|format_real }}</td>
+                        </tr>
                     </tbody>
                 </table>
             {% endif %}
@@ -77,21 +81,25 @@
                 <table class="table table-striped table-hover table-bordered border-warning table-responsive w-75" id="table-saidas">
                     <thead>
                         <tr>
-                            <th scope="col">Descrição</th>
-                            <th scope="col">Valor</th>
+                            <th class="w-50" scope="col">Descrição</th>
+                            <th class="w-50" scope="col">Valor</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for linha in saidas %}
                             <tr>
-                                <td>{{ linha.descricao|capitalize }}</td>
-                                <td>{{ linha.valor }}</td>
+                                <td class="w-50">{{ linha.descricao|capitalize }}</td>
+                                <td class="w-50">{{ linha.valor|format_real }}</td>
                             </tr>
                         {% endfor %}
-                            <tr>
-                                <td>Total</td>
-                                <td>{{ total_saidas }}</td>
-                            </tr>
+                    </tbody>
+                </table>
+                <table class="table table-striped table-hover table-bordered border-warning table-responsive w-75" id="table-entradas">
+                    <tbody>
+                        <tr>
+                            <td class="w-50"><strong>Total</strong></td>
+                            <td class="w-50">{{ total_saidas|format_real }}</td>
+                        </tr>
                     </tbody>
                 </table>
             {% endif %}
@@ -103,21 +111,25 @@
                 <table class="table table-striped table-hover table-bordered border-warning table-responsive w-75" id="table-saldos">
                     <thead>
                         <tr>
-                            <th scope="col">Banco</th>
-                            <th scope="col">Valor</th>
+                            <th class="w-50" scope="col">Banco</th>
+                            <th class="w-50" scope="col">Valor</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for linha in saldos %}
                             <tr>
-                                <td>{{ linha.banco.nome|capitalize }}</td>
-                                <td>{{ linha.saldo }}</td>
+                                <td class="w-50">{{ linha.banco.nome|capitalize }}</td>
+                                <td class="w-50">{{ linha.saldo|format_real }}</td>
                             </tr>
                         {% endfor %}
-                            <tr>
-                                <td>Total</td>
-                                <td>{{ total_saldos }}</td>
-                            </tr>
+                    </tbody>
+                </table>
+                <table class="table table-striped table-hover table-bordered border-warning table-responsive w-75" id="table-entradas">
+                    <tbody>
+                        <tr>
+                            <td class="w-50"><strong>Total</strong></td>
+                            <td class="w-50">{{ total_saldos|format_real }}</td>
+                        </tr>
                     </tbody>
                 </table>
             {% endif %}
