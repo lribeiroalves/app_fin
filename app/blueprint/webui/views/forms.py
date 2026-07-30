@@ -9,8 +9,8 @@ from wtforms.validators import DataRequired
 
 class FiltrosForm(FlaskForm):
     user = SelectField('Usuário', choices=[], validators=[DataRequired()])
-    ano = SelectField('Ano', choices=[], validators=[DataRequired()])
-    mes = SelectField('Mês', choices=[('', 'Selecione...'), ('1', 'Janeiro'), ('2', 'Fevereiro'), ('3', 'Março'), ('4', 'Abril'), ('5', 'Maio'), ('6', 'Junho'), ('7', 'Julho'), ('8', 'Agosto'), ('9', 'Setembro'), ('10', 'Outubro'), ('11', 'Novembro'), ('12', 'Dezembro')], validators=[DataRequired()])
+    ano = SelectField('Ano', choices=[], validators=[DataRequired()], default=datetime.now().year)
+    mes = SelectField('Mês', choices=[('', 'Selecione...'), ('1', 'Janeiro'), ('2', 'Fevereiro'), ('3', 'Março'), ('4', 'Abril'), ('5', 'Maio'), ('6', 'Junho'), ('7', 'Julho'), ('8', 'Agosto'), ('9', 'Setembro'), ('10', 'Outubro'), ('11', 'Novembro'), ('12', 'Dezembro')], validators=[DataRequired()], default=datetime.now().month)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
