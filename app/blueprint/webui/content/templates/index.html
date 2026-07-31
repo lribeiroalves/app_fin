@@ -149,17 +149,28 @@
                         <div class="card p-3 w-75">
                             <canvas id="graf-resultado" data-labels='{{ labels_resultado|tojson }}' data-values='{{ values_resultado|tojson }}'></canvas>
                         </div>
-                        <h4 class="text-center w-100 mt-5">Resultado: {{ (total_entradas - total_saidas)|format_real }}</h2>
+                        <div class="card mt-3">
+                            <div class="card-body py-1 px-3">
+                                Resultado: <strong>{{ (total_entradas - total_saidas)|format_real }}</strong>
+                            </div>
+                        </div>
                     </div>
                     <div class="d-flex flex-column w-50 align-items-center">
-                        <h3 class="text-center">teste</h3>
+                        <div class="card p-3 w-75">
+                            <canvas id="graf-saldo" data-labels='{{ labels_saldos|tojson }}' data-values='{{ values_saldos|tojson }}'></canvas>
+                        </div>
+                        <div class="card mt-3">
+                            <div class="card-body py-1 px-3">
+                                Resultado: <strong>{{ (total_entradas - total_saidas)|format_real }}</strong>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 {%  else %}
-    <h2 class="mt-5">Nada encontrado para esse período.</h1>
+    <h2 class="mt-5">Nada para mostrar.</h1>
 {% endif %}
 {% endblock %}
 

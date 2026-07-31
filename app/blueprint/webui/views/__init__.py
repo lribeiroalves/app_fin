@@ -46,8 +46,10 @@ def form_index():
     # graficos
     labels_resultado = ['Entradas', 'Saidas']
     values_resultado = [total_entradas, total_saidas]
+    labels_saldos = ['Mês Passado', 'Mês Atual']
+    values_saldos = [total_saldos_ant, total_saldos]
 
-    return render_template('index.html', form=form, form_validated=dados_encontrados, entradas=entradas, saidas=saidas, saldos=saldos, total_entradas=total_entradas, total_saidas=total_saidas, total_saldos=total_saldos, total_saldos_ant=total_saldos_ant, labels_resultado = labels_resultado, values_resultado=values_resultado)
+    return render_template('index.html', form=form, form_validated=dados_encontrados, entradas=entradas, saidas=saidas, saldos=saldos, total_entradas=total_entradas, total_saidas=total_saidas, total_saldos=total_saldos, total_saldos_ant=total_saldos_ant, labels_resultado = labels_resultado, values_resultado=values_resultado, labels_saldos=labels_saldos, values_saldos=values_saldos)
 
 
 def users():

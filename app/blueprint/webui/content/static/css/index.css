@@ -5,4 +5,5 @@ li button {
 li:active * {
     color: darkgoldenrod !important;
     font-weight: bold;
+    color: yellow;
 }
