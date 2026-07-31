@@ -171,8 +171,32 @@
             </div>
         </div>
     </div>
-{%  else %}
-    <h2 class="mt-5">Nada para mostrar.</h1>
+{% else %}
+    <div class="d-flex flex-column">
+        <div class="card w-25" data-bs-toggle="modal" data-bs-target="#modalEntrada" style="cursor: pointer;"">
+            <div class="card-body py-2">
+                <h5 class="text-end">Nova Entrada</h5>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal - Nova Entrada -->
+     <div class="modal fade" id="modalEntrada" tabindex="-1" aria-labelledby="modalEntradaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Cabeçalho -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEntradaLabel">Adicionar Nova Entrada</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                 <!-- Corpo -->
+                <div class="modal-body">
+                    <h3>teste</h3>
+                </div>
+
+            </div>
+        </div>
+     </div>
 {% endif %}
 {% endblock %}
 
