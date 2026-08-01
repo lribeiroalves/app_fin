@@ -1,16 +1,18 @@
 from flask import render_template, abort, redirect, url_for, jsonify
 from app.ext.database import db
 from app.ext.database.models import *
-from .forms import FiltrosForm
+from .forms import FiltrosForm, NovaEntradaForm
 from sqlalchemy import select
 
 def index():
     form = FiltrosForm()
-    return render_template('index.html', form=form)
+    form_entrada = NovaEntradaForm()
+    return render_template('index.html', form=form, form_entrada=form_entrada)
 
 
 def form_index():
     form = FiltrosForm()
+    form_entrada = NovaEntradaForm()
     dados_encontrados = False
 
     if form.validate_on_submit():
@@ -49,7 +51,7 @@ def form_index():
     labels_saldos = ['Mês Passado', 'Mês Atual']
     values_saldos = [total_saldos_ant, total_saldos]
 
-    return render_template('index.html', form=form, form_validated=dados_encontrados, entradas=entradas, saidas=saidas, saldos=saldos, total_entradas=total_entradas, total_saidas=total_saidas, total_saldos=total_saldos, total_saldos_ant=total_saldos_ant, labels_resultado = labels_resultado, values_resultado=values_resultado, labels_saldos=labels_saldos, values_saldos=values_saldos)
+    return render_template('index.html', form=form, form_entrada=form_entrada, form_validated=dados_encontrados, entradas=entradas, saidas=saidas, saldos=saldos, total_entradas=total_entradas, total_saidas=total_saidas, total_saldos=total_saldos, total_saldos_ant=total_saldos_ant, labels_resultado = labels_resultado, values_resultado=values_resultado, labels_saldos=labels_saldos, values_saldos=values_saldos)
 
 
 def users():
