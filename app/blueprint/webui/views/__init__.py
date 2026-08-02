@@ -85,7 +85,19 @@ def form_entrada():
     aba_ativa = 'entrada'
 
     if form_entrada.validate_on_submit():
-        pass
+        nova_entrada = Transacoes()
+        nova_entrada.tipo = 'ENTRADA'
+        nova_entrada.user_id = int(form_entrada.user.data)
+        nova_entrada.ano = int(form_entrada.ano.data)
+        nova_entrada.mes = int(form_entrada.mes.data)
+        nova_entrada.descricao = form_entrada.desc.data
+        nova_entrada.valor = float(form_entrada.valor.data.replace(',', '.'))
+
+        db.session.add(nova_entrada)
+        db.session.commit()
+        dados = consulta_banco(int(form_entrada.user.data), int(form_entrada.ano.data), int(form_entrada.mes.data))
+        flash('Nova Entrada inserida com sucesso!')
+
     else:
         print(form_entrada.errors)
         flash('Houve um erro com o formulário.', 'error')

@@ -3,14 +3,15 @@ from flask_wtf.form import _Auto
 from app.ext.database import db
 from app.ext.database.models import *
 from flask_wtf import FlaskForm
-from wtforms import SelectField, StringField, DecimalField
-from wtforms.validators import DataRequired
+from wtforms import SelectField, StringField, DecimalField, TextAreaField
+from wtforms.validators import DataRequired, Length
 
+msg_req = 'Campo obrigatório.'
 
 class FiltrosForm(FlaskForm):
-    user = SelectField('Usuário', choices=[], validators=[DataRequired()])
-    ano = SelectField('Ano', choices=[], validators=[DataRequired()], default=datetime.now().year)
-    mes = SelectField('Mês', choices=[('', 'Selecione...'), ('1', 'Janeiro'), ('2', 'Fevereiro'), ('3', 'Março'), ('4', 'Abril'), ('5', 'Maio'), ('6', 'Junho'), ('7', 'Julho'), ('8', 'Agosto'), ('9', 'Setembro'), ('10', 'Outubro'), ('11', 'Novembro'), ('12', 'Dezembro')], validators=[DataRequired()], default=datetime.now().month)
+    user = SelectField('Usuário', choices=[], validators=[DataRequired(message=msg_req)])
+    ano = SelectField('Ano', choices=[], validators=[DataRequired(message=msg_req)], default=datetime.now().year)
+    mes = SelectField('Mês', choices=[('', 'Selecione...'), ('1', 'Janeiro'), ('2', 'Fevereiro'), ('3', 'Março'), ('4', 'Abril'), ('5', 'Maio'), ('6', 'Junho'), ('7', 'Julho'), ('8', 'Agosto'), ('9', 'Setembro'), ('10', 'Outubro'), ('11', 'Novembro'), ('12', 'Dezembro')], validators=[DataRequired(message=msg_req)], default=datetime.now().month)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -26,11 +27,11 @@ class FiltrosForm(FlaskForm):
 
 
 class NovaEntradaForm(FlaskForm):
-    user = SelectField('Usuário', choices=[], validators=[DataRequired()])
-    ano = SelectField('Ano', choices=[], validators=[DataRequired()])
-    mes = SelectField('Mês', choices=[('', 'Selecione...'), ('1', 'Janeiro'), ('2', 'Fevereiro'), ('3', 'Março'), ('4', 'Abril'), ('5', 'Maio'), ('6', 'Junho'), ('7', 'Julho'), ('8', 'Agosto'), ('9', 'Setembro'), ('10', 'Outubro'), ('11', 'Novembro'), ('12', 'Dezembro')], validators=[DataRequired()])
-    desc = StringField('Descrição', validators=[DataRequired()])
-    valor = DecimalField('Valor', places=2, validators=[DataRequired()])
+    user = SelectField('Usuário', choices=[], validators=[DataRequired(message=msg_req)])
+    ano = StringField('Ano', validators=[DataRequired(message=msg_req)])
+    mes = SelectField('Mês', choices=[('', 'Selecione...'), ('1', 'Janeiro'), ('2', 'Fevereiro'), ('3', 'Março'), ('4', 'Abril'), ('5', 'Maio'), ('6', 'Junho'), ('7', 'Julho'), ('8', 'Agosto'), ('9', 'Setembro'), ('10', 'Outubro'), ('11', 'Novembro'), ('12', 'Dezembro')], validators=[DataRequired(message=msg_req)])
+    desc = TextAreaField('Descrição', validators=[DataRequired(message=msg_req)], render_kw={'rows': 5, 'style': 'height: 100%;'})
+    valor = StringField('Valor', validators=[DataRequired(message="O valor é obrigatório.")])
 
     def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
