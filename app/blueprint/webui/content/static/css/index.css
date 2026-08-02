@@ -7,3 +7,15 @@ li:active * {
     font-weight: bold;
     color: yellow;
 }
+
+.card-inicio {
+    width: 15%;
+    background-color: lightgoldenrodyellow;
+    transition: all 0.5s ease;
+}
+
+.card-inicio:hover {
+    background-color: goldenrod;
+    width: 20%;
+    font-weight: bold;
+}
