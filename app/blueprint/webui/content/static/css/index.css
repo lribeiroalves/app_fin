@@ -19,3 +19,15 @@ li:active * {
     width: 20%;
     font-weight: bold;
 }
+
+.btn-filtros {
+    background-color: goldenrod;
+    width: 50%;
+    transition: all 0.2s ease;
+}
+
+.btn-filtros:hover {
+    background-color: gold;
+    width: 75%;
+    font-weight: bold;
+}

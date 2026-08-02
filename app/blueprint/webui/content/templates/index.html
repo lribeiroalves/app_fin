@@ -8,29 +8,37 @@
 {% endblock %}
 
 {% block main %}
-<div class="center-form from-banco text-center pe-5">
-    <form action="{{url_for('webui.form_index')}}" method="post" class="w-100">
-        {{ form.csrf_token }}
-        <div class="d-flex flex-column">
-            <div class="w-25 mb-4 form-floating" id="div-user">
-                {{ form.user(class="form-control") }}
-                {{ form.user.label }}
-            </div>
-        </div>
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="d-flex flex-row">
-                <div class="w-50 mb-4 form-floating me-5" id="div-ano">
-                    {{ form.ano(class="form-control") }}
-                    {{ form.ano.label }}
+<div id="filtros" class="d-flex flex-column justify-content-center align-items-center">
+    <div class="card mb-4 w-75">
+        <div class="card-body d-flex flex-column justify-content-center">
+            <form action="{{url_for('webui.form_index')}}" method="post" class="w-100">
+                {{ form.csrf_token }}
+                <div class="d-flex flex-row">
+                    <div class="d-flex flex-column w-75 justify-content-center">
+                        <div class="d-flex flex-row justify-content-evenly">
+                            <div class="form-floating" id="div-user">
+                                {{ form.user(class="form-control") }}
+                                {{ form.user.label }}
+                            </div>
+                            <div class="form-floating" id="div-ano">
+                                {{ form.ano(class="form-control") }}
+                                {{ form.ano.label }}
+                            </div>
+                            <div class="form-floating" id="div-mes">
+                                {{ form.mes(class="form-control") }}
+                                {{ form.mes.label }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column w-25 justify-content-center">
+                        <div class="d-flex flex-row justify-content-evenly">
+                            <button id="submit" class="btn btn-filtros" type="submit">Confirmar</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="w-50 mb-4 form-floating me-5" id="div-mes">
-                    {{ form.mes(class="form-control") }}
-                    {{ form.mes.label }}
-                </div>
-            </div>
-            <button id="submit" class="w-25 btn btn-md mb-4 ms-5 bg-warning" type="submit">Confirmar</button>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
 
 {% if aba_ativa %}
