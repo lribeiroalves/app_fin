@@ -35,6 +35,7 @@ def form_index():
 
         if entradas:
             total_entradas = sum(entrada.valor for entrada in entradas)
+            print(total_entradas, '#'*200)
             dados_encontrados = True
         if saidas:
             total_saidas = sum(saida.valor for saida in saidas)
@@ -45,11 +46,14 @@ def form_index():
         if saldos_ant:
             total_saldos_ant = sum(saldo.saldo for saldo in saldos_ant)
 
-    # graficos
-    labels_resultado = ['Entradas', 'Saidas']
-    values_resultado = [total_entradas, total_saidas]
-    labels_saldos = ['Mês Passado', 'Mês Atual']
-    values_saldos = [total_saldos_ant, total_saldos]
+        # graficos
+        labels_resultado = ['Entradas', 'Saidas']
+        values_resultado = [total_entradas, total_saidas]
+        labels_saldos = ['Mês Passado', 'Mês Atual']
+        values_saldos = [total_saldos_ant, total_saldos]
+    else:
+        print(form.errors)
+        return redirect(url_for('webui.index'))
 
     return render_template('index.html', form=form, form_entrada=form_entrada, form_validated=dados_encontrados, entradas=entradas, saidas=saidas, saldos=saldos, total_entradas=total_entradas, total_saidas=total_saidas, total_saldos=total_saldos, total_saldos_ant=total_saldos_ant, labels_resultado = labels_resultado, values_resultado=values_resultado, labels_saldos=labels_saldos, values_saldos=values_saldos)
 
