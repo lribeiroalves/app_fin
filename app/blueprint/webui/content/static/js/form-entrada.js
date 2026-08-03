@@ -1,60 +1,66 @@
 desc_entrada = document.getElementById('desc-entrada');
-desc_entrada.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') {
-        e.preventDefault();
-    }
-});
+if (desc_entrada) {
+    desc_entrada.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+        }
+    });
+}
 
 valor_entrada = document.getElementById('valor-entrada');
-valor_entrada.addEventListener('input', function(e) {
-    let valorAtual = this.value;
-
-    valorAtual = valorAtual.replace(/[^0-9.,]/g, '');
-
-    valorAtual = valorAtual.replace(/\./g, ',');
-
-    const partes = valorAtual.split(',');
-
-    if (partes[0].length === 0) {
-        this.value = '';
-        return;
-    }
-
-    if (partes.length > 2) {
-            valorAtual = partes[0] + ',' + partes.slice(1).join('').replace(/,/g, '');
+if (valor_entrada) {
+    valor_entrada.addEventListener('input', function(e) {
+        let valorAtual = this.value;
+    
+        valorAtual = valorAtual.replace(/[^0-9.,]/g, '');
+    
+        valorAtual = valorAtual.replace(/\./g, ',');
+    
+        const partes = valorAtual.split(',');
+    
+        if (partes[0].length === 0) {
+            this.value = '';
+            return;
         }
     
-    const partesFinais = valorAtual.split(',');
-    if (partesFinais.length === 2) {
-        let decimais = partesFinais[1].substring(0, 2);
-        valorAtual = partesFinais[0] + ',' + decimais;
-    }
-
-    this.value = valorAtual;
-});
+        if (partes.length > 2) {
+                valorAtual = partes[0] + ',' + partes.slice(1).join('').replace(/,/g, '');
+            }
+        
+        const partesFinais = valorAtual.split(',');
+        if (partesFinais.length === 2) {
+            let decimais = partesFinais[1].substring(0, 2);
+            valorAtual = partesFinais[0] + ',' + decimais;
+        }
+    
+        this.value = valorAtual;
+    });
+}
 
 ano_entrada = document.getElementById('ano-entrada');
-ano_entrada.addEventListener('input', function(e) {
-    let valorAtual = this.value;
-
-    valorAtual = valorAtual.replace(/[^0-9]/g, '');
-
-    if (valorAtual.length > 4) {
-        valorAtual = valorAtual.substring(0, 4);
-    }
-
-    this.value = valorAtual;
-
-    if (this.value.length === 0) {
-        this.setCustomValidity("O campo precisa ser preenchido.")
-    } else if (this.value.length > 0 && this.value.length < 4) {
-        this.setCustomValidity("O ano deve conter exatamente 4 dígitos.");
-    } else if (this.value.length === 4 && parseInt(this.value) < 2026) {
-        this.setCustomValidity("O ano não pode ser menor que 2026.");
-    } else {
-        this.setCustomValidity(""); 
-    }
-});
+if (ano_entrada) {
+    ano_entrada.addEventListener('input', function(e) {
+        let valorAtual = this.value;
+    
+        valorAtual = valorAtual.replace(/[^0-9]/g, '');
+    
+        if (valorAtual.length > 4) {
+            valorAtual = valorAtual.substring(0, 4);
+        }
+    
+        this.value = valorAtual;
+    
+        if (this.value.length === 0) {
+            this.setCustomValidity("O campo precisa ser preenchido.")
+        } else if (this.value.length > 0 && this.value.length < 4) {
+            this.setCustomValidity("O ano deve conter exatamente 4 dígitos.");
+        } else if (this.value.length === 4 && parseInt(this.value) < 2026) {
+            this.setCustomValidity("O ano não pode ser menor que 2026.");
+        } else {
+            this.setCustomValidity(""); 
+        }
+    });
+}
 
 
 function abrirConfirmacao() {
