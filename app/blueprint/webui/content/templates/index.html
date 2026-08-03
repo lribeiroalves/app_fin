@@ -1,6 +1,7 @@
 {%  extends "layout.html" %}
 
 {% block title %}
+ - Controles
 {% endblock %}
 
 {% block link_css %}
@@ -8,6 +9,7 @@
 {% endblock %}
 
 {% block main %}
+<!-- FORMULARIO DE FILTROS -->
 <div id="filtros" class="d-flex flex-column justify-content-center align-items-center">
     <div class="card mb-4 w-75">
         <div class="card-body d-flex flex-column justify-content-center">
@@ -41,8 +43,8 @@
         </div>
     </div>
 </div>
-
 {% if aba_ativa %}
+<!-- ABAS DE NAVEGACAO -->
     <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
         <button class="nav-link {% if aba_ativa == "entrada" %}active{% endif %}" id="entradas-tab" data-bs-toggle="tab" data-bs-target="#entradas" type="button" role="tab" aria-controls="entradas" aria-selected="true">Entradas</button>
@@ -57,6 +59,7 @@
         <button class="nav-link" id="resultados-tab" data-bs-toggle="tab" data-bs-target="#resultados" type="button" role="tab" aria-controls="resultados" aria-selected="false">Resultados</button>
     </li>
     </ul>
+<!-- ABA ENTRADAS -->
     <div class="tab-content">
         <div class="tab-pane fade p-4 {% if aba_ativa == "entrada" %}show active{% endif %}" id="entradas" role="tabpanel" aria-labelledby="entradas-tab">
             <div class="d-flex align-items-center flex-column">
@@ -88,7 +91,7 @@
                 {% endif %}
                 <div class="d-flex flex-colum align-items-center w-100 mb-5">
                     <div class="d-flex flex-row justify-content-center align-items-center w-100">
-                        <div class="card mt-5 card-aba shadow-lg" data-bs-toggle="modal" data-bs-target="#modalTransacao" style="cursor: pointer;">
+                        <div class="card mt-5 card-aba shadow-lg" data-bs-toggle="modal" data-bs-target="#modalTransacao" data-tipo="entrada" style="cursor: pointer;">
                             <div class="card-body py-2">
                                 <div class="d-flex flex-row justify-content-evenly">
                                     <h3 class="text-start w-50"><i class="bi bi-box-arrow-in-down"></i></i></h3>
@@ -100,6 +103,7 @@
                 </div>
             </div>
         </div>
+<!-- ABA SAIDAS -->
         <div class="tab-pane fade p-4 {% if aba_ativa == "saida" %}show active{% endif %}" id="saidas" role="tabpanel" aria-labelledby="saidas-tab">
             <div class="d-flex align-items-center flex-column">
                 {% if saidas %}
@@ -128,8 +132,21 @@
                         </tbody>
                     </table>
                 {% endif %}
+                <div class="d-flex flex-colum align-items-center w-100 mb-5">
+                    <div class="d-flex flex-row justify-content-center align-items-center w-100">
+                        <div class="card mt-5 card-aba shadow-lg" data-bs-toggle="modal" data-bs-target="#modalTransacao" data-tipo="saida" style="cursor: pointer;">
+                            <div class="card-body py-2">
+                                <div class="d-flex flex-row justify-content-evenly">
+                                    <h3 class="text-start w-50"><i class="bi bi-box-arrow-up"></i></i></h3>
+                                    <h3 class="text-center w-50">Nova Saida</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+<!-- ABA SALDOS -->
         <div class="tab-pane fade p-4 {% if aba_ativa == "saldo" %}show active{% endif %}" id="saldos" role="tabpanel" aria-labelledby="saldos-tab">
             <div class="d-flex align-items-center flex-column">
                 {% if saldos %}
@@ -160,6 +177,7 @@
                 {% endif %}
             </div>
         </div>
+<!-- ABA RESULTADOS DO MES -->
         <div class="tab-pane fade p-4" id="resultados" role="tabpanel" aria-labelledby="resultados-tab">
             <div class="d-flex flex-column">
                 <div class="d-flex flex-row w-100">
@@ -193,6 +211,7 @@
         </div>
     </div>
 {% else %}
+<!-- BOTOTES DA PAGINA INICIAL -->
     <div class="d-flex flex-column mt-5">
         <div class="d-flex flex-row justify-content-evenly align-items-center my-5">
             <div class="card mt-5 card-inicio shadow-lg" data-bs-toggle="modal" data-bs-target="#modalTransacao" data-tipo="entrada" style="cursor: pointer;">
@@ -223,13 +242,13 @@
     </div>
 {% endif %}
 
-<!-- Modal - Nova Entrada -->
+<!-- Modal - Nova Transacao -->
 <div class="modal fade" id="modalTransacao" tabindex="-1" aria-labelledby="modalTransacaoLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <!-- Cabeçalho -->
             <div class="modal-header ps-4">
-                <h5 class="modal-title" id="modalTransacaoLabel"></h5>
+                <h5 class="modal-title" id="modalTransacaoLabel"><!-- Titulo do Modal --></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
             </div>
                 <!-- Corpo -->
