@@ -89,7 +89,7 @@ def index():
 
             db.session.add(nova_entrada)
             db.session.commit()
-            flash('Nova Entrada inserida com sucesso!')
+            flash(f'Nova {form_transacao.tipo.data.capitalize()} inserida com sucesso!')
 
             return redirect(url_for('webui.index',
                                                 user = nova_entrada.user_id,
@@ -103,6 +103,10 @@ def index():
 
     if user_arg and ano_arg and mes_arg:
         dados = consulta_banco(user_arg, ano_arg, mes_arg)
+        if request.method == 'GET':
+            form.user.data = str(user_arg)
+            form.ano.data = str(ano_arg)
+            form.mes.data = str(mes_arg)
     else:
         dados = consulta_banco()
 
