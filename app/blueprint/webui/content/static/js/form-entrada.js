@@ -85,8 +85,8 @@ function abrirConfirmacao() {
     document.getElementById('conf-desc').textContent = document.getElementById('desc-entrada').value;
 
     // Alternar modais
-    const modalEntrada = bootstrap.Modal.getOrCreateInstance(document.getElementById('modalEntrada'));
-    modalEntrada.hide();
+    const modalTransacao = bootstrap.Modal.getOrCreateInstance(document.getElementById('modalTransacao'));
+    modalTransacao.hide();
     
     const modalConfirmacao = bootstrap.Modal.getOrCreateInstance(document.getElementById('modalConfirmacao'));
     modalConfirmacao.show();
@@ -96,11 +96,24 @@ function voltarParaEdicao() {
     const modalConfirmacao = bootstrap.Modal.getOrCreateInstance(document.getElementById('modalConfirmacao'));
     modalConfirmacao.hide();
 
-    const modalEntrada = bootstrap.Modal.getOrCreateInstance(document.getElementById('modalEntrada'));
-    modalEntrada.show();
+    const modalTransacao = bootstrap.Modal.getOrCreateInstance(document.getElementById('modalTransacao'));
+    modalTransacao.show();
     
 }
 
 function enviarFormulario() {
     document.getElementById('form-entrada').submit();
 }
+
+const meuModal = document.getElementById('modalTransacao');
+meuModal.addEventListener('show.bs.modal', function(e) {
+    const botao = e.relatedTarget;
+
+    const tipo = botao.getAttribute('data-tipo');
+
+    const campo_tipo = meuModal.querySelector('#tipo');
+    campo_tipo.value = tipo;
+
+    const tituloModal = meuModal.querySelector('#modalTransacaoLabel');
+    tituloModal.textContent = `Adicionar Nova ${tipo[0].toUpperCase() + tipo.slice(1)}`;
+});
