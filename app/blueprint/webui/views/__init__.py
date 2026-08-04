@@ -116,58 +116,6 @@ def index():
     return render_template('index.html', form=form, form_transacao=form_transacao, entradas=dados['entrada'], saidas=dados['saida'], saldos=dados['saldo'], total_entradas=dados['total_entrada'], total_saidas=dados['total_saida'], total_saldos=dados['total_saldo'], total_saldos_ant=dados['total_saldo_ant'], labels_resultado = dados['labels_resultado'], values_resultado=dados['values_resultado'], labels_saldos=dados['labels_saldo'], values_saldos=dados['values_saldo'], aba_ativa=aba_ativa)
 
 
-
-# def index():
-#     form = FiltrosForm()
-#     form_transacao = NovaTransacaoForm()
-#     return render_template('index.html', form=form, form_transacao=form_transacao)
-
-
-def form_index():
-    form = FiltrosForm()
-    form_transacao = NovaTransacaoForm()
-
-    if form.validate_on_submit():
-        dados = consulta_banco(user=form.user.data, ano=form.ano.data, mes=form.mes.data)
-        if not dados:
-            flash('Nenhum dado foi encontrado', 'error')
-            return redirect(url_for('webui.index'))
-    else:
-        print(form.errors)
-        flash('Houve um erro com o formulário', 'error')
-        return redirect(url_for('webui.index'))
-
-    return render_template('index.html', form=form, form_transacao=form_transacao, entradas=dados['entrada'], saidas=dados['saida'], saldos=dados['saldo'], total_entradas=dados['total_entrada'], total_saidas=dados['total_saida'], total_saldos=dados['total_saldo'], total_saldos_ant=dados['total_saldo_ant'], labels_resultado = dados['labels_resultado'], values_resultado=dados['values_resultado'], labels_saldos=dados['labels_saldo'], values_saldos=dados['values_saldo'], aba_ativa='entrada')
-
-
-def form_transacao():
-    form = FiltrosForm()
-    form_transacao = NovaTransacaoForm()
-    aba_ativa = 'entrada'
-
-    if form_transacao.validate_on_submit():
-        nova_entrada = Transacoes()
-        nova_entrada.tipo = 'ENTRADA'
-        nova_entrada.user_id = int(form_transacao.user.data)
-        nova_entrada.ano = int(form_transacao.ano.data)
-        nova_entrada.mes = int(form_transacao.mes.data)
-        nova_entrada.descricao = form_transacao.desc.data
-        nova_entrada.valor = float(form_transacao.valor.data.replace(',', '.'))
-
-        db.session.add(nova_entrada)
-        db.session.commit()
-        dados = consulta_banco(int(form_transacao.user.data), int(form_transacao.ano.data), int(form_transacao.mes.data))
-        flash('Nova Entrada inserida com sucesso!')
-
-    else:
-        print(form_transacao.errors)
-        flash('Houve um erro com o formulário.', 'error')
-        return redirect(url_for('webui.index'))
-
-    return render_template('index.html', form=form, form_transacao=form_transacao, entradas=dados['entrada'], saidas=dados['saida'], saldos=dados['saldo'], total_entradas=dados['total_entrada'], total_saidas=dados['total_saida'], total_saldos=dados['total_saldo'], total_saldos_ant=dados['total_saldo_ant'], labels_resultado = dados['labels_resultado'], values_resultado=dados['values_resultado'], labels_saldos=dados['labels_saldo'], values_saldos=dados['values_saldo'], aba_ativa=aba_ativa)
-
-
-
 def users():
     users = db.session.scalars(db.select(Users)).all()
     users_dict = [user.to_dict() for user in users]
