@@ -43,3 +43,25 @@ li:active * {
     width: 75%;
     font-weight: bold;
 }
+
+.campo-saldo {
+    width: 40%;
+}
+
+.btn-transacao {
+    width: 50% !important;
+}
+
+.btn-saldo {
+    width: 80% !important;
+}
+
+.btn-submeter {
+    background-color: goldenrod;
+    transition: all 0.5s ease;
+}
+
+.btn-submeter:hover {
+    background-color: yellow;
+    font-weight: bold;
+}

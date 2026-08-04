@@ -1,7 +1,7 @@
 from flask import render_template, abort, redirect, url_for, jsonify, flash, request
 from app.ext.database import db
 from app.ext.database.models import *
-from .forms import FiltrosForm, NovaTransacaoForm
+from .forms import FiltrosForm, NovaTransacaoForm, NovoSaldoForm
 from sqlalchemy import select
 
 
@@ -59,6 +59,7 @@ def consulta_banco(user=1, ano=1, mes=1) -> dict:
 def index():
     form = FiltrosForm()
     form_transacao = NovaTransacaoForm()
+    form_saldo = NovoSaldoForm()
 
     user_arg = request.args.get('user', type=int)
     ano_arg = request.args.get('ano', type=int)
@@ -101,6 +102,36 @@ def index():
                 flash('Houve um erro com o formulário de nova transação.', 'error')
                 return redirect(url_for('webui.index'))
 
+    if request.method == 'POST' and request.form['form_name'] == 'saldo':
+        if form_saldo.validate_on_submit():
+
+            saldo_existente = db.session.scalars(db.select(Saldos)
+                                                    .where(Saldos.ano == int(form_saldo.ano.data))
+                                                    .where(Saldos.mes == int(form_saldo.mes.data))
+                                                    .where(Saldos.banco_id == int(form_saldo.banco.data))
+                                                    .where(Saldos.user_id == int(form_saldo.user.data))
+                                                ).first()
+            if saldo_existente:
+                saldo_existente.saldo = float(form_saldo.saldo.data.replace(',', '.'))
+                flash('Saldo Alterado.')
+            else:
+                novo_saldo = Saldos()
+                novo_saldo.ano = int(form_saldo.ano.data)
+                novo_saldo.mes = int(form_saldo.mes.data)
+                novo_saldo.saldo = float(form_saldo.saldo.data.replace(',', '.'))
+                novo_saldo.user_id = int(form_saldo.user.data)
+                novo_saldo.banco_id = int(form_saldo.banco.data)
+                db.session.add(novo_saldo)
+                flash('Novo Saldo Adicionado.')
+
+            db.session.commit()
+
+            return redirect(url_for('webui.index',
+                                                user = int(form_saldo.user.data),
+                                                ano = int(form_saldo.ano.data),
+                                                mes = int(form_saldo.mes.data),
+                                                aba_ativa = 'saldo'))
+
     if user_arg and ano_arg and mes_arg:
         dados = consulta_banco(user_arg, ano_arg, mes_arg)
         if request.method == 'GET':
@@ -113,7 +144,7 @@ def index():
     if not dados:
         flash('Nenhum dado foi encontrado', 'error')
 
-    return render_template('index.html', form=form, form_transacao=form_transacao, entradas=dados['entrada'], saidas=dados['saida'], saldos=dados['saldo'], total_entradas=dados['total_entrada'], total_saidas=dados['total_saida'], total_saldos=dados['total_saldo'], total_saldos_ant=dados['total_saldo_ant'], labels_resultado = dados['labels_resultado'], values_resultado=dados['values_resultado'], labels_saldos=dados['labels_saldo'], values_saldos=dados['values_saldo'], aba_ativa=aba_ativa)
+    return render_template('index.html', form=form, form_transacao=form_transacao, form_saldo=form_saldo, entradas=dados['entrada'], saidas=dados['saida'], saldos=dados['saldo'], total_entradas=dados['total_entrada'], total_saidas=dados['total_saida'], total_saldos=dados['total_saldo'], total_saldos_ant=dados['total_saldo_ant'], labels_resultado = dados['labels_resultado'], values_resultado=dados['values_resultado'], labels_saldos=dados['labels_saldo'], values_saldos=dados['values_saldo'], aba_ativa=aba_ativa)
 
 
 def users():
