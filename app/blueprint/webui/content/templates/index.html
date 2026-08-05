@@ -274,17 +274,17 @@
                             <div class="d-flex flex-column w-50">
                                 <div class="d-flex flex-row justify-content-evenly">
                                     <div class="w-25 mb-4 form-floating" id="div-transacao-user">
-                                        {{ form_transacao.user(class="form-control", id="user-transacao") }}
+                                        {{ form_transacao.user(class="form-control", id="user-transacao", autocomplete="off") }}
                                         {{ form_transacao.user.label }}
                                     </div>
                                     <div class="w-25 mb-4 form-floating" id="div-transacao-ano">
-                                        {{ form_transacao.ano(class="form-control", id="ano-transacao", minlength="4", maxlength="4") }}
+                                        {{ form_transacao.ano(class="form-control", id="ano-transacao", minlength="4", maxlength="4", autocomplete="off") }}
                                         {{ form_transacao.ano.label }}
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row justify-content-evenly">
                                     <div class="w-25 mb-4 form-floating" id="div-transacao-mes">
-                                        {{ form_transacao.mes(class="form-control", id="mes-transacao") }}
+                                        {{ form_transacao.mes(class="form-control", id="mes-transacao", autocomplete="off") }}
                                         {{ form_transacao.mes.label }}
                                     </div>
                                     <div class="input-group w-25 mb-4" id="div-transacao-valor">
@@ -293,7 +293,7 @@
                                         
                                         <!-- O campo flutuante -->
                                         <div class="form-floating">
-                                            {{ form_transacao.valor(class="form-control", id="valor-transacao") }}
+                                            {{ form_transacao.valor(class="form-control", id="valor-transacao", autocomplete="off") }}
                                             {{ form_transacao.valor.label }}
                                         </div>
                                     </div>
@@ -302,7 +302,7 @@
                             <div class="d-flex flex-column w-50">
                                 <div class="d-flex flex-row justify-content-center w-100">
                                     <div class="w-75 mb-4 form-floating" id="div-transacao-desc">
-                                        {{ form_transacao.desc(class="form-control", id="desc-transacao") }}
+                                        {{ form_transacao.desc(class="form-control", id="desc-transacao", autocomplete="off") }}
                                         {{ form_transacao.desc.label }}
                                     </div>
                                 </div>
@@ -338,17 +338,17 @@
                             <div class="d-flex flex-column w-100">
                                 <div class="d-flex flex-row justify-content-evenly">
                                     <div class="campo-saldo mb-4 form-floating" id="div-saldo-user">
-                                        {{ form_saldo.user(class="form-control", id="user-saldo") }}
+                                        {{ form_saldo.user(class="form-control", id="user-saldo", autocomplete="off") }}
                                         {{ form_saldo.user.label }}
                                     </div>
                                     <div class="campo-saldo mb-4 form-floating" id="div-saldo-ano">
-                                        {{ form_saldo.ano(class="form-control", id="ano-saldo", minlength="4", maxlength="4") }}
+                                        {{ form_saldo.ano(class="form-control", id="ano-saldo", minlength="4", maxlength="4", autocomplete="off") }}
                                         {{ form_saldo.ano.label }}
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row justify-content-evenly">
                                     <div class="campo-saldo mb-4 form-floating" id="div-saldo-mes">
-                                        {{ form_saldo.mes(class="form-control", id="mes-saldo") }}
+                                        {{ form_saldo.mes(class="form-control", id="mes-saldo", autocomplete="off") }}
                                         {{ form_saldo.mes.label }}
                                     </div>
                                     <div class="input-group campo-saldo mb-4" id="div-saldo-valor">
@@ -357,14 +357,14 @@
                                         
                                         <!-- O campo flutuante -->
                                         <div class="form-floating">
-                                            {{ form_saldo.saldo(class="form-control", id="saldo-saldo") }}
+                                            {{ form_saldo.saldo(class="form-control", id="saldo-saldo", autocomplete="off") }}
                                             {{ form_saldo.saldo.label }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row justify-content-center">
                                     <div class="campo-saldo mb-4 form-floating" id="div-saldo-banco">
-                                        {{ form_saldo.banco(class="form-control", id="banco-saldo") }}
+                                        {{ form_saldo.banco(class="form-control", id="banco-saldo", autocomplete="off") }}
                                         {{ form_saldo.banco.label }}
                                     </div>
                                 </div>
