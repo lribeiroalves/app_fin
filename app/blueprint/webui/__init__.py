@@ -1,5 +1,5 @@
 from flask import Blueprint
-from .views import index, users, bancos
+from .views import index, users, bancos, form_filtro, form_transaction, form_saldo, form_banco
 from app import get_base_path
 import os
 from datetime import datetime
@@ -11,6 +11,10 @@ bp = Blueprint('webui', __name__, static_folder=os.path.join(base_path, 'app', '
 
 # URLs
 bp.add_url_rule('/', view_func=index, methods=['GET', 'POST'])
+bp.add_url_rule('/form-filtro', view_func=form_filtro, methods=['POST'])
+bp.add_url_rule('/form-transaction', view_func=form_transaction, methods=['POST'])
+bp.add_url_rule('/form-saldo', view_func=form_saldo, methods=['POST'])
+bp.add_url_rule('/form-banco', view_func=form_banco, methods=['POST'])
 bp.add_url_rule('/users', view_func=users)
 bp.add_url_rule('/bancos', view_func=bancos)
 
