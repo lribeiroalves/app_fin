@@ -254,3 +254,7 @@ def bancos():
     bancos_dict = [banco.to_dict() for banco in bancos]
 
     return jsonify(bancos_dict)
+
+
+def config():
+    return render_template('config.html')

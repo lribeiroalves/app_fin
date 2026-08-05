@@ -75,3 +75,8 @@ footer > div > a {
 footer > div > span {
     color: black;
 }
+
+.icone-config {
+    text-decoration: none;
+    color: black;
+}
