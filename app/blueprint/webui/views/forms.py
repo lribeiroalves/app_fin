@@ -72,3 +72,14 @@ class NovoSaldoForm(FlaskForm):
             bancos = db.session.scalars(db.select(Bancos)).all()
             self.banco.choices = [(str(b.id), str(b.nome)) for b in bancos]
             self.banco.choices.insert(0, ('', 'Selecione...'))
+
+
+class FormBanco(FlaskForm):
+    nome = StringField('Banco', validators=[DataRequired(message=msg_req)])
+    form_name = HiddenField('form_name')
+
+
+class FormEditBanco(FlaskForm):
+    nome = StringField('Banco', validators=[DataRequired(message=msg_req)])
+    id = HiddenField('Id', validators=[DataRequired()])
+    form_name = HiddenField('form_name', validators=[DataRequired()])

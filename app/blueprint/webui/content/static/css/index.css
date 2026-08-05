@@ -65,3 +65,50 @@ li:active * {
     background-color: yellow;
     font-weight: bold;
 }
+
+.celula-bancos {
+    position: relative;
+    transition: all 0.5s ease;
+}
+
+.celula-bancos:hover {
+    border-radius: 15px;
+    background-color: lightyellow;
+    font-weight: bold;
+}
+
+#remove-bancos {
+    display: inline;
+}
+
+form button.icone-bancos {
+    display: inline;
+    vertical-align: middle;
+}
+
+.icone-bancos {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0 10px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: inherit;
+}
+
+.icone-bancos i {
+    pointer-events: none;
+}
+
+.editar-bancos {
+    float: left;
+}
+
+.apagar-bancos {
+    float: right;
+}
+
+.linha-bancos:hover .icone-bancos {
+    opacity: 1;
+}

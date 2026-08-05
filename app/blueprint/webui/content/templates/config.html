@@ -5,11 +5,110 @@
 {% endblock %}
 
 {% block link_css %}
+<link rel="stylesheet" href="{{url_for('webui.static', filename='css/index.css')}}">
 {% endblock %}
 
 {% block main %}
-teste de tela de configuracoes
+<div class="d-flex flex-column w-100 align-items-center">
+    <h1 class="w-100 text-start">Configurações</h1>
+    <div class="card w-75 mt-4">
+        <div class="card-body p-4">
+            <h3>Adicionar Banco</h3>
+            <form class="mt-4" action="{{ url_for('webui.form_banco') }}" method="post">
+                {{ form_banco.csrf_token }}
+                {{ form_banco.form_name(value="banco") }}
+                <div class="d-flex flex-column w-100 align-items-center">
+                    <div class="card w-50">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="form-floating w-50" id="div-banco">
+                                {{ form_banco.nome(class="form-control", maxlength="15") }}
+                                {{ form_banco.nome.label }}
+                                </div>
+                                <div class="w-50 d-flex justify-content-center align-items-center">
+                                    <button type="submit" class="btn btn-submeter btn-md" style="font-weight: normal;">Adicionar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="d-flex flex-column w-100 align-items-center">
+                <div class="card mt-3 w-50">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center">
+                            {% if bancos %}
+                                <table class="table table-borderless table-hover table-responsive w-50">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" scope="col">Bancos Cadastrados</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for banco in bancos %}
+                                        <tr class="linha-bancos">
+                                            <td class="w-50 text-center celula-bancos">
+                                                <span class="icone-bancos editar-bancos" data-bs-toggle="modal" data-bs-target="#modalEditBanco" data-banco-nome="{{ banco.nome }}" data-banco-id="{{ banco.id }}">
+                                                    <i class="bi bi-pen-fill"></i>
+                                                </span>
+
+                                                {{ banco.nome }}
+
+                                                <form id="remove-bancos" action="{{ url_for('webui.apagar_banco')}}" method="post">
+                                                    <button type="submit" class="icone-bancos apagar-bancos">
+                                                        <i class="bi bi-x-circle-fill"></i>
+                                                    </button>
+                                                    <input type="hidden" name="id" value="{{ banco.id }}">
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+</div>
+
+<!-- Modal Editar Banco -->
+<div class="modal fade" id="modalEditBanco" tabindex="-1" aria-labelledby="modalEditBancoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header ps-4">
+                <h5 class="modal-title" id="modalEditBancoLabel">Editar Banco</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-banco-form" class="mt-4" action="{{ url_for('webui.edit_banco') }}" method="post">
+                    {{ form_edit.csrf_token(id="token-edit") }}
+                    {{ form_edit.form_name(value="banco", id="form_name-edit") }}
+                    {{ form_edit.id(id="id-edit") }}
+                    <div class="d-flex flex-column w-100 align-items-center">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="form-floating w-50" id="div-banco">
+                                    {{ form_edit.nome(class="form-control", maxlength="15", id="nome-edit") }}
+                                    {{ form_edit.nome.label }}
+                                    </div>
+                                    <div class="w-50 d-flex justify-content-center align-items-center">
+                                        <button id="btn-edit" type="submit" class="btn btn-submeter btn-md" style="font-weight: normal;">Confirmar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block js %}
+    <script src="{{url_for('webui.static', filename='js/config.js')}}"></script>
 {% endblock %}

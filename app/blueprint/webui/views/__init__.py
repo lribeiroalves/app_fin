@@ -1,7 +1,7 @@
 from flask import render_template, abort, redirect, url_for, jsonify, flash, request
 from app.ext.database import db
 from app.ext.database.models import *
-from .forms import FiltrosForm, NovaTransacaoForm, NovoSaldoForm
+from .forms import FiltrosForm, NovaTransacaoForm, NovoSaldoForm, FormBanco, FormEditBanco
 
 
 def consulta_banco(user=1, ano=1, mes=1) -> dict:
@@ -238,10 +238,6 @@ def form_saldo():
         abort(400)
 
 
-def form_banco():
-    return ''
-
-
 def users():
     users = db.session.scalars(db.select(Users)).all()
     users_dict = [user.to_dict() for user in users]
@@ -257,4 +253,71 @@ def bancos():
 
 
 def config():
-    return render_template('config.html')
+    form = FormBanco()
+    form_edit = FormEditBanco()
+    bancos = db.session.scalars(db.select(Bancos)).all()
+
+    return render_template('config.html', form_banco=form, bancos=bancos, form_edit=form_edit)
+
+
+def form_banco():
+    form = FormBanco()
+
+    if request.method == 'POST' and request.form['form_name'] == 'banco':
+        if form.validate_on_submit():
+            novo_banco = Bancos()
+            novo_banco.nome = form.nome.data.title()
+
+            db.session.add(novo_banco)
+            db.session.commit()
+            flash('Novo Banco criado com Sucesso!')
+        else:
+            flash('Houve um erro com o Formulário.')
+
+        return redirect(url_for('webui.config'))
+    else:
+        abort(400)
+
+
+
+def apagar_banco():
+    banco_id = int(request.form['id'])
+    banco = db.session.scalar(db.select(Bancos).where(Bancos.id == int(banco_id)))
+
+    if not banco:
+        flash('Houve um erro: Banco não encontrado.')
+        return redirect(url_for('webui.config'))
+
+    saldos = db.session.scalars(db.select(Saldos).where(Saldos.banco_id == banco_id)).first()
+
+    if saldos:
+        flash('Não é possível apagar um banco que tem saldos associados.')
+        return redirect(url_for('webui.config'))
+
+    db.session.delete(banco)
+    db.session.commit()
+    flash('Banco removido com Sucesso.')
+
+    return redirect(url_for('webui.config'))
+
+
+def edit_banco():
+    form = FormEditBanco()
+
+    if request.method == 'POST' and request.form['form_name'] == 'banco':
+        if form.validate_on_submit():
+            banco_id = int(form.id.data)
+            banco = db.session.scalars(db.select(Bancos).where(Bancos.id == banco_id)).first()
+            if banco:
+                banco.nome = form.nome.data.title()
+
+                db.session.commit()
+                flash('Banco alterado com Sucesso!')
+            else:
+                flash('Houve um erro: O banco não foi encontrado.')
+        else:
+            flash('Houve um erro com o Formulário.')
+
+        return redirect(url_for('webui.config'))
+    else:
+        abort(400)

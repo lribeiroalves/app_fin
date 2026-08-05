@@ -1,5 +1,5 @@
 from flask import Blueprint
-from .views import index, users, bancos, form_filtro, form_transaction, form_saldo, form_banco, config
+from .views import *
 from app import get_base_path
 import os
 from datetime import datetime
@@ -18,6 +18,8 @@ bp.add_url_rule('/form-banco', view_func=form_banco, methods=['POST'])
 bp.add_url_rule('/users', view_func=users)
 bp.add_url_rule('/bancos', view_func=bancos)
 bp.add_url_rule('/config', view_func=config)
+bp.add_url_rule('/apagar-banco', view_func=apagar_banco, methods=['POST'])
+bp.add_url_rule('/edit-banco', view_func=edit_banco, methods=['POST'])
 
 
 def init_app(app):
