@@ -253,3 +253,45 @@ def edit_banco():
         return redirect(url_for('webui.config'))
     else:
         abort(400)
+
+
+def edit_transacao():
+    return ''
+
+
+def edit_saldo():
+    return ''
+
+
+def apaga_transacao_saldo():
+    if request.method == 'POST' and request.form['tipo'] in ['saldo', 'transacao']:
+        if request.form['tipo'] == 'transacao':
+            transacao = db.session.scalars(db.select(Transacoes).where(Transacoes.id == int(request.form['id']))).first()
+            if transacao:
+                db.session.delete(transacao)
+                db.session.commit()
+
+                flash(f'{transacao.tipo.capitalize()} apagada com sucesso.')
+                return redirect(url_for('webui.index',
+                                                                user = transacao.user_id,
+                                                                ano = transacao.ano,
+                                                                mes = transacao.mes,
+                                                                aba_ativa = transacao.tipo.lower()))
+            else:
+                abort(400)
+        elif request.form['tipo'] == 'saldo':
+            saldo = db.session.scalars(db.select(Saldos).where(Saldos.id == int(request.form['id']))).first()
+            if saldo:
+                db.session.delete(saldo)
+                db.session.commit()
+
+                flash('Saldo apagado com sucesso.')
+                return redirect(url_for('webui.index',
+                                                                                user = saldo.user_id,
+                                                                                ano = saldo.ano,
+                                                                                mes = saldo.mes,
+                                                                                aba_ativa = 'saldo'))
+            else:
+                abort(400)
+    else:
+        abort(400)

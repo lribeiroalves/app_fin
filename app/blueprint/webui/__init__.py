@@ -20,6 +20,9 @@ bp.add_url_rule('/bancos', view_func=bancos)
 bp.add_url_rule('/config', view_func=config)
 bp.add_url_rule('/apagar-banco', view_func=apagar_banco, methods=['POST'])
 bp.add_url_rule('/edit-banco', view_func=edit_banco, methods=['POST'])
+bp.add_url_rule('/edit-transacao', view_func=edit_transacao, methods=['POST'])
+bp.add_url_rule('/edit-saldo', view_func=edit_saldo, methods=['POST'])
+bp.add_url_rule('/apaga-transacao-saldo', view_func=apaga_transacao_saldo, methods=['POST'])
 
 
 def init_app(app):

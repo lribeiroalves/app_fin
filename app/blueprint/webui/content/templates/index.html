@@ -80,7 +80,7 @@
                                     <td class="" style="width: 10%;">
                                         <div class="d-flex flex-row justify-content-evenly">
                                             <i class="bi bi-pencil icone-tabela" data-bs-toggle="modal" data-bs-target="#modalEditTransacao" data-tipo-transacao="Entrada" data-id="{{ linha.id }}" data-desc="{{ linha.descricao }}" data-valor="{{ linha.valor }}"></i>
-                                            <form id="form-transacao-entrada" action="#" method="post">
+                                            <form id="form-transacao-entrada" action="{{ url_for('webui.apaga_transacao_saldo') }}" method="post">
                                                 <button type="submit" class="icone-transacao">
                                                     <i class="bi bi-x-lg icone-tabela"></i>
                                                 </button>
@@ -138,7 +138,7 @@
                                     <td class="" style="width: 10%;">
                                         <div class="d-flex flex-row justify-content-evenly">
                                             <i class="bi bi-pencil icone-tabela" data-bs-toggle="modal" data-bs-target="#modalEditTransacao" data-tipo-transacao="Saída" data-id="{{ linha.id }}" data-desc="{{ linha.descricao }}" data-valor="{{ linha.valor }}"></i>
-                                            <form id="form-transacao-saida" action="#" method="post">
+                                            <form id="form-transacao-saida" action="{{ url_for('webui.apaga_transacao_saldo') }}" method="post">
                                                 <button type="submit" class="icone-transacao">
                                                     <i class="bi bi-x-lg icone-tabela"></i>
                                                 </button>
@@ -196,7 +196,7 @@
                                     <td class="" style="width: 10%;">
                                         <div class="d-flex flex-row justify-content-evenly">
                                             <i class="bi bi-pencil icone-tabela" data-bs-toggle="modal" data-bs-target="#modalEditSaldo" data-tipo-saldo="Saldo" data-id="{{ linha.id }}" data-banco="{{ linha.banco.nome }}" data-saldo="{{ linha.saldo }}"></i>
-                                            <form id="form-saldo-saldo" action="#" method="post">
+                                            <form id="form-saldo-saldo" action="{{ url_for('webui.apaga_transacao_saldo') }}" method="post">
                                                 <button type="submit" class="icone-transacao">
                                                     <i class="bi bi-x-lg icone-tabela"></i>
                                                 </button>
