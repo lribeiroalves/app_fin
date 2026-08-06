@@ -52,3 +52,63 @@ if (campo_ano) {
         }
     });
 }
+
+const modalEditSaldo = document.getElementById('modalEditSaldo');
+modalEditSaldo.addEventListener('show.bs.modal', function(e) {
+    const botao = e.relatedTarget;
+
+    if (botao) {
+        const input_id = document.getElementById('id-edit-saldo');
+        const input_banco = document.getElementById('banco-edit-saldo');
+        const input_saldo = document.getElementById('saldo-edit-saldo');
+        const titulo_modal = document.getElementById('modalEditSaldoLabel');
+
+        titulo_modal.innerHTML = `Editar ${botao.dataset.tipoSaldo}`;
+        input_id.value = botao.dataset.id;
+        input_banco.value = botao.dataset.banco;
+        input_banco.style.height = ''; 
+        input_saldo.value = botao.dataset.saldo;
+
+        const eventoInput = new Event('input');
+        input_saldo.dispatchEvent(eventoInput);
+    }
+});
+
+campo_editar_banco_saldo = document.getElementById('banco-edit-saldo');
+if (campo_editar_banco_saldo) {
+    campo_editar_banco_saldo.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+        }
+    });
+}
+
+campo_editar_valor_saldo = document.getElementById('saldo-edit-saldo');
+if (campo_editar_valor_saldo) {
+    campo_editar_valor_saldo.addEventListener('input', function(e) {
+        let valorAtual = this.value;
+    
+        valorAtual = valorAtual.replace(/[^0-9.,]/g, '');
+    
+        valorAtual = valorAtual.replace(/\./g, ',');
+    
+        const partes = valorAtual.split(',');
+    
+        if (partes[0].length === 0) {
+            this.value = '';
+            return;
+        }
+    
+        if (partes.length > 2) {
+                valorAtual = partes[0] + ',' + partes.slice(1).join('').replace(/,/g, '');
+            }
+        
+        const partesFinais = valorAtual.split(',');
+        if (partesFinais.length === 2) {
+            let decimais = partesFinais[1].substring(0, 2);
+            valorAtual = partesFinais[0] + ',' + decimais;
+        }
+    
+        this.value = valorAtual;
+    });
+}

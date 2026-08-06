@@ -84,7 +84,8 @@
                                                 <button type="submit" class="icone-transacao">
                                                     <i class="bi bi-x-lg icone-tabela"></i>
                                                 </button>
-                                                <input type="hidden" name="id-transaction" value="{{ linha.id }}">
+                                                <input type="hidden" name="id" value="{{ linha.id }}">
+                                                <input type="hidden" name="tipo" value="transacao">
                                             </form>
                                         </div>
                                     </td>
@@ -124,27 +125,42 @@
                     <table class="table table-striped table-hover table-bordered border-warning table-responsive w-75" id="table-saidas">
                         <thead>
                             <tr>
-                                <th class="w-50" scope="col">Descrição</th>
-                                <th class="w-50" scope="col">Valor</th>
+                                <th class="" style="width: 45%;" scope="col">Descrição</th>
+                                <th class="" style="width: 45%;" scope="col">Valor</th>
+                                <th class="text-center" style="width: 10%;" scope="col">Ação</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for linha in saidas %}
                                 <tr>
-                                    <td class="w-50">{{ linha.descricao|capitalize }}</td>
-                                    <td class="w-50">{{ linha.valor|format_real }}</td>
+                                    <td class="" style="width: 45%;">{{ linha.descricao|capitalize }}</td>
+                                    <td class="" style="width: 45%;">{{ linha.valor|format_real }}</td>
+                                    <td class="" style="width: 10%;">
+                                        <div class="d-flex flex-row justify-content-evenly">
+                                            <i class="bi bi-pencil icone-tabela" data-bs-toggle="modal" data-bs-target="#modalEditTransacao" data-tipo-transacao="Saída" data-id="{{ linha.id }}" data-desc="{{ linha.descricao }}" data-valor="{{ linha.valor }}"></i>
+                                            <form id="form-transacao-saida" action="#" method="post">
+                                                <button type="submit" class="icone-transacao">
+                                                    <i class="bi bi-x-lg icone-tabela"></i>
+                                                </button>
+                                                <input type="hidden" name="id" value="{{ linha.id }}">
+                                                <input type="hidden" name="tipo" value="transacao">
+                                            </form>
+                                        </div>
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </tbody>
                     </table>
-                    <table class="table table-striped table-hover table-bordered border-warning table-responsive w-75" id="table-entradas">
-                        <tbody>
-                            <tr>
-                                <td class="w-50"><strong>Total</strong></td>
-                                <td class="w-50">{{ total_saidas|format_real }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="d-flex flex-column w-75">
+                        <table class="table table-striped table-hover table-bordered border-warning table-responsive" style="width: 90%;" id="table-saidas">
+                            <tbody>
+                                <tr>
+                                    <td class="w-50"><strong>Total</strong></td>
+                                    <td class="w-50">{{ total_saidas|format_real }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 {% endif %}
                 <div class="d-flex flex-colum align-items-center w-100 mb-5">
                     <div class="d-flex flex-row justify-content-center align-items-center w-100">
@@ -167,27 +183,42 @@
                     <table class="table table-striped table-hover table-bordered border-warning table-responsive w-75" id="table-saldos">
                         <thead>
                             <tr>
-                                <th class="w-50" scope="col">Banco</th>
-                                <th class="w-50" scope="col">Valor</th>
+                                <th class="" style="width: 45%;" scope="col">Banco</th>
+                                <th class="" style="width: 45%;" scope="col">Valor</th>
+                                <th class="text-center" style="width: 10%;" scope="col">Ação</th>
                             </tr>
-                        </thead>
+                       </thead>
                         <tbody>
                             {% for linha in saldos %}
                                 <tr>
-                                    <td class="w-50">{{ linha.banco.nome|capitalize }}</td>
-                                    <td class="w-50">{{ linha.saldo|format_real }}</td>
+                                    <td class="" style="width: 45%;">{{ linha.banco.nome|capitalize }}</td>
+                                    <td class="" style="width: 45%;">{{ linha.saldo|format_real }}</td>
+                                    <td class="" style="width: 10%;">
+                                        <div class="d-flex flex-row justify-content-evenly">
+                                            <i class="bi bi-pencil icone-tabela" data-bs-toggle="modal" data-bs-target="#modalEditSaldo" data-tipo-saldo="Saldo" data-id="{{ linha.id }}" data-banco="{{ linha.banco.nome }}" data-saldo="{{ linha.saldo }}"></i>
+                                            <form id="form-saldo-saldo" action="#" method="post">
+                                                <button type="submit" class="icone-transacao">
+                                                    <i class="bi bi-x-lg icone-tabela"></i>
+                                                </button>
+                                                <input type="hidden" name="id" value="{{ linha.id }}">
+                                                <input type="hidden" name="tipo" value="saldo">
+                                            </form>
+                                        </div>
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </tbody>
                     </table>
-                    <table class="table table-striped table-hover table-bordered border-warning table-responsive w-75" id="table-entradas">
-                        <tbody>
-                            <tr>
-                                <td class="w-50"><strong>Total</strong></td>
-                                <td class="w-50">{{ total_saldos|format_real }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="d-flex flex-column w-75">
+                        <table class="table table-striped table-hover table-bordered border-warning table-responsive" style="width: 90%;" id="table-saldos">
+                            <tbody>
+                                <tr>
+                                    <td class="w-50"><strong>Total</strong></td>
+                                    <td class="w-50">{{ total_saldos|format_real }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 {% endif %}
                 <div class="d-flex flex-colum align-items-center w-100 mb-5">
                     <div class="d-flex flex-row justify-content-center align-items-center w-100">
@@ -237,7 +268,7 @@
         </div>
     </div>
 {% else %}
-<!-- BOTOTES DA PAGINA INICIAL -->
+<!-- BOTOES DA PAGINA INICIAL -->
     <div class="d-flex flex-column mt-5">
         <div class="d-flex flex-row justify-content-evenly align-items-center my-5">
             <div class="card mt-5 card-inicio shadow-lg" data-bs-toggle="modal" data-bs-target="#modalTransacao" data-tipo="entrada" style="cursor: pointer;">
@@ -421,26 +452,66 @@
 
 <!-- Modal de Edicao de transacoes -->
  <div class="modal fade" id="modalEditTransacao" tabindex="-1" aria-labelledby="modalEditTransacaoLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header ps4">
                 <h5 class="modal-title" id="modalEditTransacaoLabel"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
             </div>
-            <div class="modal-body fs-5">
+            <div class="modal-body">
                 <form id="edit-banco-form" class="mt-4" action="{{ url_for('webui.index') }}" method="post">
                     {{ form_edit_transacao.csrf_token(id="token-edit-transacao") }}
-                    {{ form_edit_transacao.form_name(value="banco", id="form_name-edit-transacao") }}
+                    {{ form_edit_transacao.form_name(value="transacao", id="form_name-edit-transacao") }}
                     {{ form_edit_transacao.id(id="id-edit-transacao") }}
-                    <div class="d-flex flex-column w-100 align-items-center">
-                        <div class="d-flex flex-row w-100 justify-content-evenly">
-                            <div class="form-floating w-50" id="div-banco">
-                                {{ form_edit_transacao.desc(class="form-control", maxlength="15", id="desc-edit-transacao", autocomplete="off") }}
+                    <div class="d-flex flex-column w-100 align-items-center mb-4">
+                        <div class="d-flex flex-row w-100 justify-content-evenly align-items-start">
+                            <div class="form-floating w-50" id="div-edit-desc">
+                                {{ form_edit_transacao.desc(class="form-control", id="desc-edit-transacao", autocomplete="off") }}
                                 {{ form_edit_transacao.desc.label }}
                             </div>
-                            <div class="form-floating w-25" id="div-banco">
-                                {{ form_edit_transacao.valor(class="form-control", maxlength="15", id="valor-edit-transacao", autocomplete="off") }}
-                                {{ form_edit_transacao.valor.label }}
+                            <div class="input-group w-25">
+                                <span class="input-group-text">R$</span>
+                                <div class="form-floating" id="div-edit-valor">
+                                    {{ form_edit_transacao.valor(class="form-control text-end", id="valor-edit-transacao", autocomplete="off") }}
+                                    {{ form_edit_transacao.valor.label }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer justify-content-end pe-5">
+                <button id="conf-submeter" type="button" class="btn btn-warning w-25">Confirmar</button>
+            </div>
+        </div>
+    </div>
+ </div>
+
+ <!-- Modal de Edicao de transacoes -->
+ <div class="modal fade" id="modalEditSaldo" tabindex="-1" aria-labelledby="modalEditSaldoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header ps4">
+                <h5 class="modal-title" id="modalEditSaldoLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-banco-form" class="mt-4" action="{{ url_for('webui.index') }}" method="post">
+                    {{ form_edit_saldo.csrf_token(id="token-edit-saldo") }}
+                    {{ form_edit_saldo.form_name(value="saldo", id="form_name-edit-saldo") }}
+                    {{ form_edit_saldo.id(id="id-edit-saldo") }}
+                    <div class="d-flex flex-column w-100 align-items-center mb-4">
+                        <div class="d-flex flex-row w-100 justify-content-evenly align-items-start">
+                            <div class="form-floating w-50" id="div-edit-banco">
+                                {{ form_edit_saldo.banco(class="form-control", id="banco-edit-saldo", autocomplete="off") }}
+                                {{ form_edit_saldo.banco.label }}
+                            </div>
+                            <div class="input-group w-25">
+                                <span class="input-group-text">R$</span>
+                                <div class="form-floating" id="div-edit-saldo">
+                                    {{ form_edit_saldo.saldo(class="form-control text-end", id="saldo-edit-saldo", autocomplete="off") }}
+                                    {{ form_edit_saldo.saldo.label }}
+                                </div>
                             </div>
                         </div>
                     </div>

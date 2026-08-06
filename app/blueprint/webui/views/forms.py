@@ -86,7 +86,14 @@ class FormEditBanco(FlaskForm):
 
 
 class FormEditTransacao(FlaskForm):
-    desc = StringField('Descrição', validators=[DataRequired()])
+    desc = TextAreaField('Descrição', validators=[DataRequired()])
     valor = StringField('Valor', validators=[DataRequired()])
+    id = HiddenField('id', validators=[DataRequired()])
+    form_name = HiddenField('form_name', validators=[DataRequired()])
+
+
+class FormEditSaldo(FlaskForm):
+    banco = TextAreaField('Banco', validators=[DataRequired()])
+    saldo = StringField('Saldo', validators=[DataRequired()])
     id = HiddenField('id', validators=[DataRequired()])
     form_name = HiddenField('form_name', validators=[DataRequired()])

@@ -1,7 +1,7 @@
 from flask import render_template, abort, redirect, url_for, jsonify, flash, request
 from app.ext.database import db
 from app.ext.database.models import *
-from .forms import FiltrosForm, NovaTransacaoForm, NovoSaldoForm, FormBanco, FormEditBanco, FormEditTransacao
+from .forms import FiltrosForm, NovaTransacaoForm, NovoSaldoForm, FormBanco, FormEditBanco, FormEditTransacao, FormEditSaldo
 
 
 def consulta_banco(user=1, ano=1, mes=1) -> dict:
@@ -60,6 +60,7 @@ def index():
     form_transacao = NovaTransacaoForm()
     form_saldo = NovoSaldoForm()
     form_edit_transacao = FormEditTransacao()
+    form_edit_saldo = FormEditSaldo()
 
     user_arg = request.args.get('user', type=int)
     ano_arg = request.args.get('ano', type=int)
@@ -78,7 +79,7 @@ def index():
     if not dados:
         flash('Nenhum dado foi encontrado', 'error')
 
-    return render_template('index.html', form=form, form_transacao=form_transacao, form_saldo=form_saldo, form_edit_transacao=form_edit_transacao, entradas=dados['entrada'], saidas=dados['saida'], saldos=dados['saldo'], total_entradas=dados['total_entrada'], total_saidas=dados['total_saida'], total_saldos=dados['total_saldo'], total_saldos_ant=dados['total_saldo_ant'], labels_resultado = dados['labels_resultado'], values_resultado=dados['values_resultado'], labels_saldos=dados['labels_saldo'], values_saldos=dados['values_saldo'], aba_ativa=aba_ativa)
+    return render_template('index.html', form=form, form_transacao=form_transacao, form_saldo=form_saldo, form_edit_transacao=form_edit_transacao, form_edit_saldo=form_edit_saldo, entradas=dados['entrada'], saidas=dados['saida'], saldos=dados['saldo'], total_entradas=dados['total_entrada'], total_saidas=dados['total_saida'], total_saldos=dados['total_saldo'], total_saldos_ant=dados['total_saldo_ant'], labels_resultado = dados['labels_resultado'], values_resultado=dados['values_resultado'], labels_saldos=dados['labels_saldo'], values_saldos=dados['values_saldo'], aba_ativa=aba_ativa)
 
 
 def form_filtro():

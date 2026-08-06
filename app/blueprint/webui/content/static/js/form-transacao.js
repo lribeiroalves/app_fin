@@ -182,6 +182,49 @@ modalEditTransacao.addEventListener('show.bs.modal', function(e) {
         titulo_modal.innerHTML = `Editar ${botao.dataset.tipoTransacao}`;
         input_id.value = botao.dataset.id;
         input_desc.value = botao.dataset.desc;
+        input_desc.style.height = ''; 
         input_valor.value = botao.dataset.valor;
+
+        const eventoInput = new Event('input');
+        input_valor.dispatchEvent(eventoInput);
     }
 });
+
+campo_editar_desc_transacao = document.getElementById('desc-edit-transacao');
+if (campo_editar_desc_transacao) {
+    campo_editar_desc_transacao.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+        }
+    });
+}
+
+campo_editar_valor_transacao = document.getElementById('valor-edit-transacao');
+if (campo_editar_valor_transacao) {
+    campo_editar_valor_transacao.addEventListener('input', function(e) {
+        let valorAtual = this.value;
+    
+        valorAtual = valorAtual.replace(/[^0-9.,]/g, '');
+    
+        valorAtual = valorAtual.replace(/\./g, ',');
+    
+        const partes = valorAtual.split(',');
+    
+        if (partes[0].length === 0) {
+            this.value = '';
+            return;
+        }
+    
+        if (partes.length > 2) {
+                valorAtual = partes[0] + ',' + partes.slice(1).join('').replace(/,/g, '');
+            }
+        
+        const partesFinais = valorAtual.split(',');
+        if (partesFinais.length === 2) {
+            let decimais = partesFinais[1].substring(0, 2);
+            valorAtual = partesFinais[0] + ',' + decimais;
+        }
+    
+        this.value = valorAtual;
+    });
+}
