@@ -168,3 +168,20 @@ meuModal.addEventListener('show.bs.modal', function(e) {
         tituloModal.textContent = `Adicionar Nova ${tipo[0].toUpperCase() + tipo.slice(1)}`;
     }
 });
+
+const modalEditTransacao = document.getElementById('modalEditTransacao');
+modalEditTransacao.addEventListener('show.bs.modal', function(e) {
+    const botao = e.relatedTarget;
+
+    if (botao) {
+        const input_id = document.getElementById('id-edit-transacao');
+        const input_desc = document.getElementById('desc-edit-transacao');
+        const input_valor = document.getElementById('valor-edit-transacao');
+        const titulo_modal = document.getElementById('modalEditTransacaoLabel');
+
+        titulo_modal.innerHTML = `Editar ${botao.dataset.tipoTransacao}`;
+        input_id.value = botao.dataset.id;
+        input_desc.value = botao.dataset.desc;
+        input_valor.value = botao.dataset.valor;
+    }
+});

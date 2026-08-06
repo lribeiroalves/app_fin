@@ -112,3 +112,15 @@ form button.icone-bancos {
 .linha-bancos:hover .icone-bancos {
     opacity: 1;
 }
+
+.icone-tabela {
+    cursor: pointer;
+}
+
+.icone-transacao {
+    display: inline;
+    vertical-align: middle;
+    background: none;
+    border: none;
+
+}
