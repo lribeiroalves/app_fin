@@ -342,3 +342,10 @@ def apaga_transacao_saldo():
 
 def graficos_view():
     return render_template('graficos.html')
+
+
+def atualiza_graficos():
+    dados = request.get_json()
+    print(type(dados))
+    print(dados)
+    return ''

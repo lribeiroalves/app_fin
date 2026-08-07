@@ -24,6 +24,7 @@ bp.add_url_rule('/edit-transacao', view_func=edit_transacao, methods=['POST'])
 bp.add_url_rule('/edit-saldo', view_func=edit_saldo, methods=['POST'])
 bp.add_url_rule('/apaga-transacao-saldo', view_func=apaga_transacao_saldo, methods=['POST'])
 bp.add_url_rule('/graficos', view_func=graficos_view)
+bp.add_url_rule('/atualiza-graficos', view_func=atualiza_graficos, methods=['POST'])
 
 
 def init_app(app):

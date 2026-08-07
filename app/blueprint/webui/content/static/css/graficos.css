@@ -1,0 +1,49 @@
+li button {
+    color: black !important;
+}
+
+li:active * {
+    color: darkgoldenrod !important;
+    font-weight: bold;
+    color: yellow;
+}
+
+.aba-lateral {
+    width: 20%;
+}
+
+/* 1. ESTADO PADRÃO (DESMARCADO) */
+.btn-mes {
+    background-color: #ffffff;
+    color: #495057; /* Cinza escuro para o texto */
+    border: 1px solid #dee2e6; /* Borda bem suave */
+    transition: all 0.2s ease-in-out;
+}
+
+/* 2. ESTADO HOVER (MOUSE EM CIMA, DESMARCADO) */
+.btn-mes:hover {
+    background-color: #f8f9fa;
+    color: #000000;
+    border-color: #adb5bd; /* Escurece um pouco a borda ao passar o mouse */
+}
+
+/* 3. ESTADO SELECIONADO (MARCADO) */
+.btn-check:checked + .btn-mes {
+    /* Amarelo claro inspirado no seu cabeçalho. 
+       Se quiser exatamente o mesmo tom, veja a dica abaixo! */
+    background-color: #fcf18d; 
+    color: #000000; /* Texto preto para dar contraste com o amarelo */
+    border-color: #000000; /* Borda preta, combinando com os ícones do topo */
+    font-weight: 600; /* Deixa o texto em negrito para destacar mais */
+}
+
+/* 4. ESTADO HOVER (MOUSE EM CIMA, MARCADO) */
+.btn-check:checked + .btn-mes:hover {
+    background-color: #f5e464; /* Um amarelo levemente mais escuro */
+    border-color: #000000;
+}
+
+.btn-update {
+    background-color: lightyellow;
+    border-color: black;
+}
