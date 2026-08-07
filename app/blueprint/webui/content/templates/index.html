@@ -459,10 +459,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
             </div>
             <div class="modal-body">
-                <form id="edit-banco-form" class="mt-4" action="{{ url_for('webui.index') }}" method="post">
+                <form id="edit-transacao-form" class="mt-4" action="{{ url_for('webui.edit_transacao') }}" method="post">
                     {{ form_edit_transacao.csrf_token(id="token-edit-transacao") }}
                     {{ form_edit_transacao.form_name(value="transacao", id="form_name-edit-transacao") }}
                     {{ form_edit_transacao.id(id="id-edit-transacao") }}
+                    {{ form_edit_transacao.tipo(id="tipo-edit-transacao") }}
                     <div class="d-flex flex-column w-100 align-items-center mb-4">
                         <div class="d-flex flex-row w-100 justify-content-evenly align-items-start">
                             <div class="form-floating w-50" id="div-edit-desc">
@@ -481,7 +482,7 @@
                 </form>
             </div>
             <div class="modal-footer justify-content-end pe-5">
-                <button id="conf-submeter" type="button" class="btn btn-warning w-25">Confirmar</button>
+                <button id="conf-submeter" type="submit" form="edit-transacao-form" class="btn btn-warning w-25">Confirmar</button>
             </div>
         </div>
     </div>
@@ -496,7 +497,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
             </div>
             <div class="modal-body">
-                <form id="edit-banco-form" class="mt-4" action="{{ url_for('webui.index') }}" method="post">
+                <form id="edit-saldo-form" class="mt-4" action="{{ url_for('webui.edit_saldo') }}" method="post">
                     {{ form_edit_saldo.csrf_token(id="token-edit-saldo") }}
                     {{ form_edit_saldo.form_name(value="saldo", id="form_name-edit-saldo") }}
                     {{ form_edit_saldo.id(id="id-edit-saldo") }}
@@ -518,7 +519,7 @@
                 </form>
             </div>
             <div class="modal-footer justify-content-end pe-5">
-                <button id="conf-submeter" type="button" class="btn btn-warning w-25">Confirmar</button>
+                <button id="conf-submeter" type="submit" form="edit-saldo-form" class="btn btn-warning w-25">Confirmar</button>
             </div>
         </div>
     </div>

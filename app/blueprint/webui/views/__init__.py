@@ -256,11 +256,54 @@ def edit_banco():
 
 
 def edit_transacao():
-    return ''
+    form = FormEditTransacao()
+
+    if request.method == 'POST' and request.form['form_name'] == 'transacao':
+        if form.validate_on_submit():
+            transacao = db.session.scalars(db.select(Transacoes).where(Transacoes.id == int(form.id.data))).first()
+
+            if transacao:
+                try:
+                    transacao.descricao = form.desc.data
+                    transacao.valor = float(form.valor.data.replace(',','.'))
+
+                    db.session.commit()
+                    flash(f'{form.tipo.data.capitalize()} atualizada com sucesso')
+                except:
+                    flash('Houve um erro durante a atualizacao. Tente novamente.')
+
+                return redirect(url_for('webui.index',
+                                                user = transacao.user_id,
+                                                ano = transacao.ano,
+                                                mes = transacao.mes,
+                                                aba_ativa = transacao.tipo.lower()))
+            else:
+                abort(400)
 
 
 def edit_saldo():
-    return ''
+    form = FormEditSaldo()
+
+    if request.method == 'POST' and request.form['form_name'] == 'saldo':
+            if form.validate_on_submit():
+                saldo = db.session.scalars(db.select(Saldos).where(Saldos.id == int(form.id.data))).first()
+
+                if saldo:
+                    try:
+                        saldo.saldo = float(form.saldo.data.replace(',','.'))
+                        db.session.commit()
+                        flash('Saldo atualizado com sucesso.')
+                    except:
+                        flash('Houve um erro durante a atualizacao. Tente novamente.')
+
+                    return redirect(url_for('webui.index',
+                                                    user = saldo.user_id,
+                                                    ano = saldo.ano,
+                                                    mes = saldo.mes,
+                                                    aba_ativa = 'saldo'))
+                else:
+                    abort(400)
+
 
 
 def apaga_transacao_saldo():

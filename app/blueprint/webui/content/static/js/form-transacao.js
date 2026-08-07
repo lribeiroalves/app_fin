@@ -177,6 +177,7 @@ modalEditTransacao.addEventListener('show.bs.modal', function(e) {
         const input_id = document.getElementById('id-edit-transacao');
         const input_desc = document.getElementById('desc-edit-transacao');
         const input_valor = document.getElementById('valor-edit-transacao');
+        const input_tipo = document.getElementById('tipo-edit-transacao');
         const titulo_modal = document.getElementById('modalEditTransacaoLabel');
 
         titulo_modal.innerHTML = `Editar ${botao.dataset.tipoTransacao}`;
@@ -184,6 +185,7 @@ modalEditTransacao.addEventListener('show.bs.modal', function(e) {
         input_desc.value = botao.dataset.desc;
         input_desc.style.height = ''; 
         input_valor.value = botao.dataset.valor;
+        input_tipo.value = botao.dataset.tipoTransacao.toLowerCase()
 
         const eventoInput = new Event('input');
         input_valor.dispatchEvent(eventoInput);

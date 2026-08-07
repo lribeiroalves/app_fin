@@ -90,6 +90,7 @@ class FormEditTransacao(FlaskForm):
     valor = StringField('Valor', validators=[DataRequired()])
     id = HiddenField('id', validators=[DataRequired()])
     form_name = HiddenField('form_name', validators=[DataRequired()])
+    tipo = HiddenField('tipo', validators=[DataRequired()])
 
 
 class FormEditSaldo(FlaskForm):
