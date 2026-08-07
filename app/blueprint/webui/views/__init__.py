@@ -338,3 +338,7 @@ def apaga_transacao_saldo():
                 abort(400)
     else:
         abort(400)
+
+
+def graficos_view():
+    return render_template('graficos.html')
