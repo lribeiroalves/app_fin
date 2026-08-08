@@ -352,10 +352,11 @@ def atualiza_graficos():
     grafico = dados['grafico'][-1]
     ano = int(dados['ano'])
     meses = [int(k.split('-')[1]) for i, (k, v) in enumerate(dados['meses'].items()) if v == True]
+    user = int(dados['user'])
 
     if grafico == '1':
-        transacoes = db.session.scalars(db.select(Transacoes).where(Transacoes.ano == ano, Transacoes.mes.in_(meses))).all()
-        
+        transacoes = db.session.scalars(db.select(Transacoes).where(Transacoes.ano == ano, Transacoes.mes.in_(meses), Transacoes.user_id == user)).all()
+        print(transacoes)
     elif grafico == '2':
         pass
     else:

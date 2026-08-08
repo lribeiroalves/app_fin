@@ -28,6 +28,18 @@
                     </select>
                 </div>
 
+                <!-- Filtro de Usuario -->
+                <div class="mb-5">
+                    <label for="selectUser" class="form-label fw-semibold text-muted small text-uppercase">Usuário</label>
+                    <select class="form-select border-secondary-subtle focus-ring" id="selectUser">
+                        <!-- Usar loop do Jinja aqui no futuro -->
+                        <option value="" selected>Selecione...</option>
+                        <option value="1">Sandra</option>
+                        <option value="2">Samantha</option>
+                        <option value="3">Mercedes</option>
+                    </select>
+                </div>
+
                 <!-- Filtro de Meses -->
                 <div class="mb-4">
                     <label class="form-label fw-semibold text-muted small text-uppercase mb-3">Meses</label>
@@ -97,11 +109,19 @@
                     </div>
                 </div>
 
+                <!-- Botão de Limpar -->
+                <!-- A classe mt-auto empurra este bloco para o final do card -->
+                <div class="mb-4">
+                    <button class="btn btn-update w-100 shadow-sm" type="button" id="limpar-selecao">
+                        <i class="bi bi-trash"></i> Limpar Seleção
+                    </button>
+                </div>
+
                 <!-- Botão de Ação -->
                 <!-- A classe mt-auto empurra este bloco para o final do card -->
                 <div class="mt-auto">
                     <button class="btn btn-update w-100 shadow-sm" type="button" id="atualiza-grafico">
-                        <i class="bi bi-search me-2"></i> Atualizar Gráficos
+                        <i class="bi bi-search me-2"></i> Atualizar Gráfico
                     </button>
                 </div>
             </div>
