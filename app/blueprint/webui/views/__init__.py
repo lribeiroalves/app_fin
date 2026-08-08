@@ -346,6 +346,19 @@ def graficos_view():
 
 def atualiza_graficos():
     dados = request.get_json()
-    print(type(dados))
-    print(dados)
+    # print(type(dados))
+    # print(dados)
+
+    grafico = dados['grafico'][-1]
+    ano = int(dados['ano'])
+    meses = [int(k.split('-')[1]) for i, (k, v) in enumerate(dados['meses'].items()) if v == True]
+
+    if grafico == '1':
+        transacoes = db.session.scalars(db.select(Transacoes).where(Transacoes.ano == ano, Transacoes.mes.in_(meses))).all()
+        
+    elif grafico == '2':
+        pass
+    else:
+        abort(400)
+
     return ''
