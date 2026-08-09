@@ -2,6 +2,8 @@ from flask import render_template, abort, redirect, url_for, jsonify, flash, req
 from app.ext.database import db
 from app.ext.database.models import *
 from .forms import FiltrosForm, NovaTransacaoForm, NovoSaldoForm, FormBanco, FormEditBanco, FormEditTransacao, FormEditSaldo
+from collections import defaultdict
+import random
 
 
 def consulta_banco(user=1, ano=1, mes=1) -> dict:
@@ -346,19 +348,60 @@ def graficos_view():
 
 def atualiza_graficos():
     dados = request.get_json()
-    # print(type(dados))
-    # print(dados)
 
-    grafico = dados['grafico'][-1]
-    ano = int(dados['ano'])
-    meses = [int(k.split('-')[1]) for i, (k, v) in enumerate(dados['meses'].items()) if v == True]
-    user = int(dados['user'])
+    if not dados:
+        abort(400)
 
-    if grafico == '1':
-        transacoes = db.session.scalars(db.select(Transacoes).where(Transacoes.ano == ano, Transacoes.mes.in_(meses), Transacoes.user_id == user)).all()
-        print(transacoes)
-    elif grafico == '2':
-        pass
+    request_grafico = dados['grafico'][-1]
+    request_ano = int(dados['ano'])
+    request_user = int(dados['user'])
+    request_meses = [int(k.split('-')[1]) for i, (k, v) in enumerate(dados['meses'].items()) if v == True]
+
+    meses = {str(mes): [['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'][mes-1], 0, {}] for mes in request_meses}
+
+    if request_grafico == '1':
+        transacoes = db.session.scalars(db.select(Transacoes).where(Transacoes.ano == request_ano, Transacoes.mes.in_(request_meses), Transacoes.user_id == request_user)).all()
+
+        if transacoes:
+            pass
+        else:
+            abort(400)
+
+    elif request_grafico == '2':
+        saldos = db.session.scalars(db.select(Saldos).where(Saldos.ano == request_ano, Saldos.mes.in_(request_meses), Saldos.user_id == request_user).order_by(Saldos.mes)).all()
+
+        if saldos:
+            bancos = sorted(set([saldo.banco.nome for saldo in saldos]))
+            saldos_por_banco = {}
+            for banco in bancos:
+                color = [random.randint(0, 255) for _ in range(3)]
+                saldos_por_banco[banco] = {
+                    'label': banco,
+                    'data': [None] * len(request_meses),
+                    'backgroundColor': f"rgba({color[0]}, {color[1]}, {color[2]}, 0.6)",
+                    'borderColor': f"rgba({color[0]}, {color[1]}, {color[2]}, 1)"
+                }
+
+            for saldo in saldos:
+                meses[str(saldo.mes)][1] += float(saldo.saldo)
+                meses[str(saldo.mes)][2][saldo.banco.nome] = meses[str(saldo.mes)][2].get(saldo.banco.nome, 0) + float(saldo.saldo)
+
+            for i, m in enumerate(meses.values()):
+                for b in m[2].items():
+                    saldos_por_banco[b[0]]['data'][i] = b[1]
+
+            data_meses = [v[0] for _, v in meses.items()]
+            data_linha = [v[1] for _, v in meses.items()]
+            data_barras = [saldo for _, saldo in saldos_por_banco.items()]
+
+            return jsonify({
+                'meses': data_meses,
+                'linha': data_linha,
+                'barras': data_barras
+            })
+                
+        else:
+            abort(400)
     else:
         abort(400)
 
