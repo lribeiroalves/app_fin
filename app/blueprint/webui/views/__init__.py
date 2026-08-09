@@ -343,7 +343,10 @@ def apaga_transacao_saldo():
 
 
 def graficos_view():
-    return render_template('graficos.html')
+    anos_transacoes = db.session.scalars(db.select(Transacoes.ano)).all()
+    anos_saldos = db.session.scalars(db.select(Saldos.ano)).all()
+    anos = list(set(anos_transacoes) | set(anos_saldos))
+    return render_template('graficos.html', anos=anos)
 
 
 def atualiza_graficos():
@@ -357,13 +360,40 @@ def atualiza_graficos():
     request_user = int(dados['user'])
     request_meses = [int(k.split('-')[1]) for i, (k, v) in enumerate(dados['meses'].items()) if v == True]
 
-    meses = {str(mes): [['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'][mes-1], 0, {}] for mes in request_meses}
+    meses_fluxo = {str(mes): [['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'][mes-1], 0, 0, 0] for mes in request_meses}
+    meses_patrimonio = {str(mes): [['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'][mes-1], 0, {}] for mes in request_meses}
+
 
     if request_grafico == '1':
         transacoes = db.session.scalars(db.select(Transacoes).where(Transacoes.ano == request_ano, Transacoes.mes.in_(request_meses), Transacoes.user_id == request_user)).all()
 
         if transacoes:
-            pass
+            for transacao in transacoes:
+                if transacao.tipo == 'ENTRADA':
+                    meses_fluxo[str(transacao.mes)][1] += float(transacao.valor)
+                elif transacao.tipo == 'SAIDA':
+                    meses_fluxo[str(transacao.mes)][2] += float(transacao.valor)
+
+            dados_meses = []
+            dados_entradas = []
+            dados_saidas = []
+            dados_saldos = []
+
+            for k, v in meses_fluxo.items():
+                v[3] = v[1] - v[2]
+                dados_meses.append(v[0])
+                dados_entradas.append(v[1])
+                dados_saidas.append(v[2])
+                dados_saldos.append(v[3])
+
+            return jsonify({
+                'meses': dados_meses,
+                'entradas': dados_entradas,
+                'saidas': dados_saidas,
+                'saldos': dados_saldos
+            })
+
+
         else:
             abort(400)
 
@@ -383,15 +413,15 @@ def atualiza_graficos():
                 }
 
             for saldo in saldos:
-                meses[str(saldo.mes)][1] += float(saldo.saldo)
-                meses[str(saldo.mes)][2][saldo.banco.nome] = meses[str(saldo.mes)][2].get(saldo.banco.nome, 0) + float(saldo.saldo)
+                meses_patrimonio[str(saldo.mes)][1] += float(saldo.saldo)
+                meses_patrimonio[str(saldo.mes)][2][saldo.banco.nome] = meses_patrimonio[str(saldo.mes)][2].get(saldo.banco.nome, 0) + float(saldo.saldo)
 
-            for i, m in enumerate(meses.values()):
+            for i, m in enumerate(meses_patrimonio.values()):
                 for b in m[2].items():
                     saldos_por_banco[b[0]]['data'][i] = b[1]
 
-            data_meses = [v[0] for _, v in meses.items()]
-            data_linha = [v[1] for _, v in meses.items()]
+            data_meses = [v[0] for _, v in meses_patrimonio.items()]
+            data_linha = [v[1] for _, v in meses_patrimonio.items()]
             data_barras = [saldo for _, saldo in saldos_por_banco.items()]
 
             return jsonify({

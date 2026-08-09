@@ -21,10 +21,12 @@
                 <div class="mb-4">
                     <label for="selectAno" class="form-label fw-semibold text-muted small text-uppercase">Ano Referência</label>
                     <select class="form-select border-secondary-subtle focus-ring" id="selectAno">
-                        <!-- Usar loop do Jinja aqui no futuro -->
-                        <option value="2026" selected>2026</option>
-                        <option value="2025">2025</option>
-                        <option value="2024">2024</option>
+                        <option value="" selected>Selecione...</option>
+                        {% if anos %}
+                            {% for ano in anos %}
+                                <option value="{{ ano }}">{{ ano }}</option>
+                            {% endfor %}
+                        {% endif %}
                     </select>
                 </div>
 
@@ -32,7 +34,6 @@
                 <div class="mb-5">
                     <label for="selectUser" class="form-label fw-semibold text-muted small text-uppercase">Usuário</label>
                     <select class="form-select border-secondary-subtle focus-ring" id="selectUser">
-                        <!-- Usar loop do Jinja aqui no futuro -->
                         <option value="" selected>Selecione...</option>
                         <option value="1">Sandra</option>
                         <option value="2">Samantha</option>
@@ -109,12 +110,19 @@
                     </div>
                 </div>
 
-                <!-- Botão de Limpar -->
-                <!-- A classe mt-auto empurra este bloco para o final do card -->
-                <div class="mb-4">
-                    <button class="btn btn-update w-100 shadow-sm" type="button" id="limpar-selecao">
-                        <i class="bi bi-trash"></i> Limpar Seleção
-                    </button>
+                <div class="row justify-content-evenly">
+                    <!-- Botão de Limpar -->
+                    <div class="mb-2 col-5">
+                        <button class="btn btn-update w-100 shadow-sm" type="button" id="limpar-selecao">
+                            <i class="bi bi-trash"></i> Limpar Seleção
+                        </button>
+                    </div>
+                    <!-- Botão de Selecionar Tudo -->
+                    <div class="mb-4 col-5">
+                        <button class="btn btn-update w-100 shadow-sm" type="button" id="selecionar-tudo">
+                            <i class="bi bi-check2-square"></i> Selecionar Tudo
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Botão de Ação -->
