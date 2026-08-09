@@ -1,3 +1,5 @@
+import { graficoPatrimonio } from "./graficoPatrimonio.js";
+
 var usuarioSelecionado1 = 0;
 var usuarioSelecionado2 = 0;
 var anoSelecionado1 = 0;
@@ -95,11 +97,11 @@ $("#atualiza-grafico").on("click", function() {
                 console.log("graf1", resposta)
             } else if (payload["grafico"] === "graf2") {
                 // carrega grafico 2
-                console.log("graf2", resposta)
+                graficoPatrimonio(resposta.meses, resposta.linha, resposta.barras);
             }
         },
         error: function(erro) {
-            console.log(erro)
+            exibirMensagem("Nenhum dado foi encontrado.", 'danger');
         }
     });
 })
